@@ -1,0 +1,9 @@
+body {
+    text-align: center;
+}
+
+canvas{
+    position:fixed;
+    left:0;
+    top:0;
+}

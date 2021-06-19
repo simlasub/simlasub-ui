@@ -1,0 +1,23 @@
+{
+  "name": "simlasub-ui",
+  "version": "1.0.0",
+  "description": "A customized UI for the controll of an ROV.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simlasub/simlasub-ui.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simlasub/simlasub-ui/issues"
+  },
+  "homepage": "https://github.com/simlasub/simlasub-ui#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ws": "^7.5.0"
+  }
+}
