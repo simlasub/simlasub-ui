@@ -38,12 +38,13 @@ function renderVirtualHorizon(){
 	const parallelDistance = 5; // in degrees
 	const parallelLength = 200; // from center
 	const clip = true;
+	const framed = true;
 
 	// Clip a rectangular area for virtual horizon
 	if(clip){	// for debug purposes
-		//vh.beginPath();
+		cp.beginPath();
 		cp.rect(offset[0],offset[1], vhSize[0], vhSize[1]);
-		//vh.stroke();
+		if(framed){cp.stroke();}
 		cp.clip();
 	}
 
