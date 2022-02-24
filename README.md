@@ -10,7 +10,7 @@ Features to implement:
 - [x] virtual Horizon
 - [x] depth indicator
 - [x] compass
-- [] speed indicator
-- [] movement vector
-- [] text stuff
-- [] communication stack
+- [ ] speed indicator
+- [ ] movement vector
+- [ ] text stuff
+- [ ] communication stack
