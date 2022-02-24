@@ -10,14 +10,14 @@ function initializeVirtualHorizon(){
 
 	vhSize = [dim[0]*0.7 - 160,dim[1] * 0.8]
 	vhOffset = [dim[0]/2-vhSize[0]/2, dim[1]/2-vhSize[1]/2];
-	vhParallelLength = 0.4*(vhSize[0]-fontSize*3);
+	vhParallelLength = 0.2*(vhSize[0]-fontSize*3);
 }
 
 // renders the virtual horizon, the movement direction indicator and the paralles
 function renderVirtualHorizon(){
 	// set parameters
 	const centerSpacing = 30; // only half
-	const parallelDistance = 5; // in degrees
+	const parallelDistance = 10; // in degrees
 	const clip = true;
 	const framed = false;
 	const vhCompassSize = 10;
