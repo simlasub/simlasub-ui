@@ -1,7 +1,7 @@
 // global variable
 var dim = [1920,1080];
 const colors = ["#e88300", "#006198","#e80000"];
-const lineWidth = 1.0;
+const lineWidth = 2.0;
 const fontSize = 25;
 const font = fontSize + "px sans-serif";
 
@@ -78,12 +78,17 @@ function initializeAll(){
 	initializeBackground();
 	initializeVirtualHorizon();
 	initializeDepth();
+	initializeCompass();
 
 	renderAll();
 }
 
 function renderAll(){
+	// clear canvas
+	c.clearRect(0, 0, dim[0], dim[1]);
+
 	renderBackground();
 	renderVirtualHorizon();
 	renderDepth();
+	renderCompass();
 }

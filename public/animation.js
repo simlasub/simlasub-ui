@@ -17,7 +17,8 @@ function renderAnimation(){
 	const time = frame * animationFrameTime;
 	roll = Math.sin(time * 0.2)*2.5 + Math.sin(time * 3)*0.5;
 	pitch = Math.sin(time * 0.05)*20 + Math.sin(time * 0.1)*1 + Math.sin(time * 3.5)*0.2;
-	heading = Math.sin(time * 0.05)*0.5 + Math.sin(time * 4)*0.1;
+
+	heading = (time*2 % 360);
 
 	depth = 5 + 0.05*Math.cos(time) - 5*Math.cos(time * 0.08);
 	vSpeed = - 0.05*Math.sin(time) + 0.08*5*Math.sin(time * 0.08);

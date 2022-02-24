@@ -15,10 +15,6 @@ function renderDepth(){
 	const vSpeedIndicator = 15;
 	const depthScale = depthSize[1]/8;
 	const depthScaleLength = 20;
-
-	// clear Old Frame
-	c.clearRect(0, 0, dim[0], dim[1]);
-
 	// draw line
 	c.beginPath();
 	c.moveTo(offset[0], offset[1]);
@@ -56,10 +52,10 @@ function renderDepth(){
 	// draw vSpeed Indicator
 	c.beginPath();
 	c.moveTo(offset[0], offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale);
-	c.lineTo(offset[0]-vSpeedIndicator, offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale+vSpeedIndicator);
-	c.lineTo(offset[0]-vSpeedIndicator, offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale-vSpeedIndicator);
+	c.lineTo(offset[0]-vSpeedIndicator, offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale+vSpeedIndicator/1.2);
+	c.lineTo(offset[0]-vSpeedIndicator, offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale-vSpeedIndicator/1.2);
 	c.lineTo(offset[0], offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale);
-	c.stroke();
+	c.fill();
 	// draw vSpeed Text
 	c.textAlign = "right";
 	c.fillText(vSpeed.toFixed(2), offset[0]+depthSize[0], offset[1] -6, depthSize[0]);
