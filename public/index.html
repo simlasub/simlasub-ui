@@ -4,21 +4,21 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Websocket test</title>
+	<title>UI Demo</title>
 
+	<script src="virtualHorizon.js"></script>
 	<script src="index.js"></script>
-	<script src="centerPanel.js"></script>
+	<script src="helper.js"></script>
+	<script src="background.js"></script>
+	<script src="animation.js"></script>
+	<script src="depth.js"></script>
 	<link rel="stylesheet" href="style.css">
-
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<canvas id="background" width="1920" height="1080">
-	</canvas>
-	<canvas id="centerPanel" width="1920" height="1080">
-	</canvas>
+	<canvas id="background" width="1920" height="1080"></canvas>
+	<canvas id="canvas" width="1920" height="1080"></canvas>
+	<canvas id="virtualHorizon" width="1920" height="1080"></canvas>
 </body>
 <script>onStart()</script>
 </html>
