@@ -1,11 +1,8 @@
 # SIMLASUB UI
 
-Heads up display for steering SIMLASUB an ArduSub based ROV.\
-Using a heads-up display like:
-![Image of Heads-Up dislay](example.png)
+Heads up display for steering SIMLASUB an ArduSub based ROV.
 
 Features to implement:
-
 - [x] canvas Element
 - [x] virtual Horizon
 - [x] depth indicator
@@ -14,3 +11,6 @@ Features to implement:
 - [ ] movement vector
 - [ ] text stuff
 - [ ] communication stack
+
+concept Art:
+![Image of Heads-Up dislay](example.png)
