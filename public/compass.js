@@ -61,5 +61,5 @@ function renderCompass(){
 
 	// heading text
 	c.textAlign = "left";
-	c.fillText(heading.toFixed(0).padStart(3, '0'), offset[0]+compassRadius+10, offset[1] +fontSize/2 -6);
+	c.fillText(heading.toFixed(0).padStart(3, '0'), offset[0]+compassRadius+10, offset[1] +fontSize/2 -fontOffset);
 }

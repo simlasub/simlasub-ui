@@ -85,14 +85,16 @@ function renderVirtualHorizon(){
 	// draw top parallel
 	for(var i = 1; i<18; i++){
 		drawVirtualHorizon_Parallel(dim[1]/2 - i*parallelDistance*pixelPerDegree, centerSpacing, vhParallelLength);
-		vh.fillText(i*parallelDistance, dim[0]/2+vhParallelLength+fontSize/2, dim[1]/2 - i*parallelDistance*pixelPerDegree +5);
+		vh.textAlign = "left";
+		vh.fillText(i*parallelDistance, dim[0]/2+vhParallelLength+10, dim[1]/2 - i*parallelDistance*pixelPerDegree + fontSize/2 -fontOffset, 3* fontSize);
 	}
 
 	// draw bottom parallel
 	vh.setLineDash([15,10]);
 	for(var i = 1; i<18; i++){
 		drawVirtualHorizon_Parallel(dim[1]/2 + i*parallelDistance*pixelPerDegree, centerSpacing, vhParallelLength);
-		vh.fillText(i*parallelDistance, dim[0]/2+vhParallelLength+fontSize/2, dim[1]/2 + i*parallelDistance*pixelPerDegree +5);
+		vh.textAlign = "left";
+		vh.fillText(i*parallelDistance, dim[0]/2+vhParallelLength+10, dim[1]/2 + i*parallelDistance*pixelPerDegree + fontSize/2 -fontOffset, 3* fontSize);
 	}
 	vh.setLineDash([1,0]);
 }

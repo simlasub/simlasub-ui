@@ -3,6 +3,7 @@ var dim = [1920,1080];
 const colors = ["#e88300", "#006198","#e80000"];
 const lineWidth = 2.0;
 const fontSize = 25;
+const fontOffset = 6;
 const font = fontSize + "px sans-serif";
 
 var pixelPerDegree = 20;
