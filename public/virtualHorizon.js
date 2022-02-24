@@ -6,7 +6,6 @@ function initializeVirtualHorizon(){
 	vh.strokeStyle = colors[0];
 	vh.fillStyle = colors[0];
 	vh.lineWidth = lineWidth;
-	vh.font = font;
 
 	vhSize = [dim[0]*0.7 - 160,dim[1] * 0.8]
 	vhOffset = [dim[0]/2-vhSize[0]/2, dim[1]/2-vhSize[1]/2];

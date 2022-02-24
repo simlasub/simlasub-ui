@@ -1,7 +1,7 @@
 // global variable
 var dim = [1920,1080];
 const colors = ["#e88300", "#006198","#e80000"];
-const lineWidth = 1.3;
+const lineWidth = 1.0;
 const fontSize = 25;
 const font = fontSize + "px sans-serif";
 
@@ -58,8 +58,17 @@ function onResize(){
 	virtualHorizon.width = dim[0];
 	virtualHorizon.height = dim[1];
 
-	// recalculate
-	pixelPerDegree = dim[0]/90;
+	// setup canvas
+	c.strokeStyle = colors[0];
+	c.fillStyle = colors[0];
+	c.lineWidth = lineWidth;
+	c.font = font;
+
+	// setup vh canvas
+	vh.strokeStyle = colors[0];
+	vh.fillStyle = colors[0];
+	vh.lineWidth = lineWidth;
+	vh.font = font;
 
 	// redraw canvas
 	initializeAll();
@@ -70,7 +79,7 @@ function initializeAll(){
 	initializeVirtualHorizon();
 	initializeDepth();
 
-	renderAll();	
+	renderAll();
 }
 
 function renderAll(){

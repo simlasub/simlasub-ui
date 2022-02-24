@@ -1,4 +1,6 @@
 function initializeBackground(){
+	// recalculate
+	pixelPerDegree = dim[0]/90;
 	
 }
 

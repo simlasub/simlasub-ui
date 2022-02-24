@@ -3,11 +3,6 @@ var depthSize = [80,vhSize[1]];
 
 // intitializes the depth gauge
 function initializeDepth(){
-	c.strokeStyle = colors[0];
-	c.fillStyle = colors[0];
-	c.lineWidth = lineWidth;
-	c.font = font;
-
 	depthSize = [80, vhSize[1]]
 }
 
@@ -63,7 +58,8 @@ function renderDepth(){
 	c.moveTo(offset[0], offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale);
 	c.lineTo(offset[0]-vSpeedIndicator, offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale+vSpeedIndicator);
 	c.lineTo(offset[0]-vSpeedIndicator, offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale-vSpeedIndicator);
-	c.fill();
+	c.lineTo(offset[0], offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale);
+	c.stroke();
 	// draw vSpeed Text
 	c.textAlign = "right";
 	c.fillText(vSpeed.toFixed(2), offset[0]+depthSize[0], offset[1] -6, depthSize[0]);
@@ -80,7 +76,7 @@ function renderDepth(){
 			c.fillText((depth-i).toFixed(0), offset[0]+depthScaleLength, offset[1] + depthSize[1]/2 - i*depthScale+7,  depthSize[0]-depthScaleLength);
 		} else if(depth-i == 0){
 			c.rect(offset[0], offset[1] + depthSize[1]/2 - i*depthScale, depthSize[0], i*depthScale -depthSize[1]/2 );
-			c.fill();
+			c.stroke();
 		}
 		i += 1;
 	}
@@ -95,7 +91,7 @@ function renderDepth(){
 			c.fillText((depth-i).toFixed(0), offset[0]+depthScaleLength, offset[1] + depthSize[1]/2 - i*depthScale+7,  depthSize[0]-depthScaleLength);
 		} else if(depth-i == 0){
 			c.rect(offset[0], offset[1] + depthSize[1]/2 - i*depthScale, depthSize[0], i*depthScale -depthSize[1]/2 );
-			c.fill();
+			c.stroke();
 		}
 		i = i-1;
 	}
