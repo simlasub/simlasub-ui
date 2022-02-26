@@ -12,5 +12,5 @@ Features to implement:
 - [ ] text stuff
 - [ ] communication stack
 
-concept Art:
+Concept Art:
 ![Image of Heads-Up dislay](example.png)
