@@ -2,25 +2,28 @@
 
 <html>
 
-<head>
+<header>
 	<meta charset="utf-8">
 	<title>UI Demo</title>
 
-	<script src="virtualHorizon.js"></script>
+	<!-- load scripts -->
 	<script src="index.js"></script>
+	<script src="virtualHorizon.js"></script>
 	<script src="helper.js"></script>
 	<script src="background.js"></script>
 	<script src="animation.js"></script>
 	<script src="depth.js"></script>
 	<script src="compass.js"></script>
-
+	<!-- and stylesheet -->
 	<link rel="stylesheet" href="style.css">
-</head>
+</header>
 
 <body>
 	<canvas id="background" width="1920" height="1080"></canvas>
 	<canvas id="canvas" width="1920" height="1080"></canvas>
 	<canvas id="virtualHorizon" width="1920" height="1080"></canvas>
 </body>
+
+<!-- call onStart() in index.js after everything else -->
 <script>onStart()</script>
 </html>
