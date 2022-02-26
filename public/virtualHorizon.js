@@ -1,6 +1,7 @@
 var vhSize = [700,700]; // size of the virtual horizon
 var vhOffset;
 var vhParallelLength = 200;
+var vhCenterSpacing = 30; // only half
 
 // intitializes the virtual horizon
 function initializeVirtualHorizon(){
@@ -8,15 +9,15 @@ function initializeVirtualHorizon(){
 	vh.fillStyle = colors[0];
 	vh.lineWidth = lineWidth;
 
-	vhSize = [dim[0]*0.7 - 160,dim[1] * 0.8]
+	vhSize = [dim[0]*0.7 - 160,dim[1] * 0.8];
 	vhOffset = [dim[0]/2-vhSize[0]/2, dim[1]/2-vhSize[1]/2];
 	vhParallelLength = 0.2*(vhSize[0]-fontSize*3);
+	vhCenterSpacing = 0.3 * vhParallelLength;
 }
 
 // renders the virtual horizon, the movement direction indicator and the paralles
 function renderVirtualHorizon(){
 	// set parameters
-	const centerSpacing = 30; // only half
 	const parallelDistance = 10; // in degrees
 	const clip = true;
 	const framed = false;
@@ -37,11 +38,11 @@ function renderVirtualHorizon(){
 
 	// draw Center indicator
 	vh.beginPath();
-	vh.moveTo(dim[0]/2-centerSpacing,dim[1]/2);
-	vh.lineTo(dim[0]/2-centerSpacing/3,dim[1]/2);
-	vh.lineTo(dim[0]/2,dim[1]/2+centerSpacing/3);
-	vh.lineTo(dim[0]/2+centerSpacing/3,dim[1]/2);
-	vh.lineTo(dim[0]/2+centerSpacing,dim[1]/2);
+	vh.moveTo(dim[0]/2-vhCenterSpacing,dim[1]/2);
+	vh.lineTo(dim[0]/2-vhCenterSpacing/3,dim[1]/2);
+	vh.lineTo(dim[0]/2,dim[1]/2+vhCenterSpacing/3);
+	vh.lineTo(dim[0]/2+vhCenterSpacing/3,dim[1]/2);
+	vh.lineTo(dim[0]/2+vhCenterSpacing,dim[1]/2);
 	vh.stroke();
 
 	// transform the canvas
@@ -69,22 +70,24 @@ function renderVirtualHorizon(){
 		let j = i + heading;
 		if(i%90==0){
 			vh.beginPath();
-			vh.moveTo(dim[0]/2 + j*pixelPerDegree, y-vhCompassSize);
-			vh.lineTo(dim[0]/2 + j*pixelPerDegree, y+vhCompassSize);
+			vh.moveTo(dim[0]/2 - j*pixelPerDegree, y-vhCompassSize);
+			vh.lineTo(dim[0]/2 - j*pixelPerDegree, y+vhCompassSize);
 			vh.stroke();
 
 		}else{
 			vh.beginPath();
-			vh.moveTo(dim[0]/2 + j*pixelPerDegree, y-vhCompassSize);
-			vh.lineTo(dim[0]/2 + j*pixelPerDegree, y);
+			vh.moveTo(dim[0]/2 - j*pixelPerDegree, y-vhCompassSize);
+			vh.lineTo(dim[0]/2 - j*pixelPerDegree, y);
 			vh.stroke();
 		}
 		
+		vh.textAlign = "center";
+		vh.fillText(((360-i)%360).toFixed(0).padStart(3, '0'), dim[0]/2 - j*pixelPerDegree, y -vhCompassSize - fontSize/2 +fontOffset, 3* fontSize);
 	}
 
 	// draw top parallel
 	for(var i = 1; i<18; i++){
-		drawVirtualHorizon_Parallel(dim[1]/2 - i*parallelDistance*pixelPerDegree, centerSpacing, vhParallelLength);
+		drawVirtualHorizon_Parallel(dim[1]/2 - i*parallelDistance*pixelPerDegree, vhCenterSpacing, vhParallelLength);
 		vh.textAlign = "left";
 		vh.fillText(i*parallelDistance, dim[0]/2+vhParallelLength+10, dim[1]/2 - i*parallelDistance*pixelPerDegree + fontSize/2 -fontOffset, 3* fontSize);
 	}
@@ -92,7 +95,7 @@ function renderVirtualHorizon(){
 	// draw bottom parallel
 	vh.setLineDash([15,10]);
 	for(var i = 1; i<18; i++){
-		drawVirtualHorizon_Parallel(dim[1]/2 + i*parallelDistance*pixelPerDegree, centerSpacing, vhParallelLength);
+		drawVirtualHorizon_Parallel(dim[1]/2 + i*parallelDistance*pixelPerDegree, vhCenterSpacing, vhParallelLength);
 		vh.textAlign = "left";
 		vh.fillText(i*parallelDistance, dim[0]/2+vhParallelLength+10, dim[1]/2 + i*parallelDistance*pixelPerDegree + fontSize/2 -fontOffset, 3* fontSize);
 	}

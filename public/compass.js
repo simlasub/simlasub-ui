@@ -60,6 +60,6 @@ function renderCompass(){
 	c.fill();
 
 	// heading text
-	c.textAlign = "left";
-	c.fillText(heading.toFixed(0).padStart(3, '0'), offset[0]+compassRadius+10, offset[1] +fontSize/2 -fontOffset);
+	c.textAlign = "center";
+	c.fillText(heading.toFixed(0).padStart(3, '0'), offset[0], offset[1] - compassRadius - indicator-5);
 }
