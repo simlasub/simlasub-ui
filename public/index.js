@@ -30,16 +30,6 @@ var minBattery = 6;
 var resBattery = 8;
 var lastError = "NO ERROR";
 
-// dictionary with features: lable: [init. Fkt., render Fkt.]
-const featureFunctions = {
-	background: [()=>initializeBackground(),()=>renderBackground()],
-	virtualHorizon: [()=>initializeVirtualHorizon(),()=>renderVirtualHorizon()],
-	depth: [()=>initializeDepth(),()=>renderDepth()],
-	compass: [()=>initializeCompass(),()=>renderCompass()],
-};
-// array of features to handle (initialize and render)
-var activeFeatures = ["background","virtualHorizon","depth","compass"];
-
 /**
  * this function is called after everything is loaded
  */
@@ -99,8 +89,11 @@ function initializeAll(){
 	vh.lineWidth = lineWidth;
 	vh.font = font;
 	
-	// call initialization Functions with their feature names i in the active features list
-	activeFeatures.map((i)=>featureFunctions[i][0]());	
+	// initialize all features
+	initializeBackground();
+	initializeVirtualHorizon();
+	initializeCompass();
+	initializeDepth(); // depends on vhSize[] from initializeVirtualHorizon()
 
 	// render all
 	renderAll();
@@ -114,6 +107,9 @@ function renderAll(){
 	c.clearRect(0, 0, dim[0], dim[1]);
 	vh.clearRect(0, 0, dim[0], dim[1]);
 
-	// call render Functions with their feature names i in the active features list
-	activeFeatures.map((i)=>featureFunctions[i][1]());
+	// render all features
+	renderBackground();
+	renderVirtualHorizon();
+	renderCompass();
+	renderDepth();
 }

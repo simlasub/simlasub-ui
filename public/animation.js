@@ -6,7 +6,7 @@
 // global variables
 var animationFrameTime = 1/30;
 var frame = 0;
-var animaionSpeedFaktor = 1;
+var animationSpeedFaktor = 0;
 
 /**
  * start the Animation
@@ -22,7 +22,7 @@ function renderAnimation(){
 	// increment frame number and calculate time 
 	// not memory efficient but this is no production code
 	frame++;
-	const time = frame * animationFrameTime * animaionSpeedFaktor;
+	const time = frame * animationFrameTime * animationSpeedFaktor;
 
 	// calculate roll and pitch for virtual Horizon with added sin curves
 	roll = Math.sin(time * 0.2)*2.5 + Math.sin(time * 3)*0.5;

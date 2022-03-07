@@ -1,14 +1,16 @@
 /**
  * Draws Depth scale and vSpeed indicator.
  * @param {canvas context} c
+ * @param {Number} vhSize[1]
  */
 
 // global variables
 var depthSize = [80,vhSize[1]];
 
 
-// intitializes the depth gauge
+// initializes the depth gauge
 function initializeDepth(){
+	depthSize = [80,vhSize[1]];
 }
 
 /**
