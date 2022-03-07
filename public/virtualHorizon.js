@@ -7,7 +7,7 @@
 var vhSize = [700,700]; // size of the virtual horizon
 var vhOffset;
 var vhParallelLength = 200; // half-length of horizon parallels
-var vhCenterSpacing = 30; // half-length of center spacing
+var vhCenterSpacing = 20; // half-length of center spacing
 
 /**
  * initializes the virtual horizon needs canvas Context vh
@@ -52,13 +52,26 @@ function renderVirtualHorizon(){
 	}
 
 	// draw Center indicator ##################################################
+	/*
+	// airplane style 
 	vh.beginPath();
 	vh.moveTo(dim[0]/2-vhCenterSpacing,dim[1]/2);
 	vh.lineTo(dim[0]/2-vhCenterSpacing/3,dim[1]/2);
 	vh.lineTo(dim[0]/2,dim[1]/2+vhCenterSpacing/3);
 	vh.lineTo(dim[0]/2+vhCenterSpacing/3,dim[1]/2);
 	vh.lineTo(dim[0]/2+vhCenterSpacing,dim[1]/2);
+	vh.stroke();*/
+	vh.lineWidth = 1.0*lineWidth;
+	vh.beginPath();
+	vh.moveTo(dim[0]/2-vhCenterSpacing,dim[1]/2);
+	vh.lineTo(dim[0]/2+vhCenterSpacing,dim[1]/2);
 	vh.stroke();
+	vh.beginPath();
+	vh.moveTo(dim[0]/2,dim[1]/2);
+	vh.lineTo(dim[0]/2,dim[1]/2-vhCenterSpacing/1.5);
+	vh.stroke();
+	vh.lineWidth = lineWidth;
+
 
 
 	// transform the canvas ###################################################

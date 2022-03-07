@@ -15,30 +15,59 @@ function initializeDepth(){
 
 /**
  * renders the depth scale and vSpeed indicator
- * @param {Number[2]} offset 
- * @param {Number} depthScaleExtend 
- * @param {Number} vSpeedScaleExtend 
- * @param {Number} vSpeedIndicator Size of indicator
- * @param {boolean} framed 
+ * @param {Number} mode
+ * mode 
+ *	1: Full
+ * 	2: Number and vSpeed indicator
+ * 	3: only number
  */
-function renderDepth(
-	offset = [ vhOffset[0]+vhSize[0], vhOffset[1] ], 
-	depthScaleExtend = 8, vSpeedScaleExtend = 1,
-	vSpeedIndicator = 20,
-	framed = false
-	){
-	
+function renderDepth(mode){
+	const offset = [ vhOffset[0]+vhSize[0], vhOffset[1] ];
+	const depthScaleExtend = 8;
+	const vSpeedScaleExtend = 1;
+	const vSpeedIndicator = 15;
+	const framed = false;
+
+	if(mode<=1){
+		drawDepthScale(offset, depthScaleExtend);
+	}
+	if(mode<=2){
+		// draw line for Scales between virtual Horizon #######################
+		c.beginPath();
+		c.moveTo(offset[0], offset[1]);
+		c.lineTo(offset[0], offset[1]+depthSize[1]);
+		// if framed draw box
+		if(framed){	c.rect(offset[0],offset[1],depthSize[0],depthSize[1]);}
+		c.stroke();
+	}
+
+	// draw depth number ######################################################
+	// clear under text
+	c.clearRect(offset[0], 
+		offset[1] + depthSize[1]/2 - fontSize/2-4, 
+		depthSize[0], fontSize+4);
+	// draw text
+	c.textAlign = "right";
+	c.fillText(depth.toFixed(1), 
+		offset[0]+depthSize[0]-5, 
+		offset[1] + depthSize[1]/2 + fontSize/2-fontOffset, depthSize[0]-5);
+	// draw rectangle around
+	if(mode < 3){
+		c.rect(offset[0], 
+			offset[1] + depthSize[1]/2 - fontSize/2-4, 
+			depthSize[0], fontSize+4);
+		c.stroke();
+	}
+
+	// draw vSpeed ############################################################
+	if(mode<=2){
+		drawVSpeed(offset, vSpeedIndicator, vSpeedScaleExtend);
+	}
+}
+
+function drawDepthScale(offset, depthScaleExtend){
 	// calculate depth Scale
 	const depthScale = depthSize[1] / depthScaleExtend;
-	const vSpeedScale = depthSize[1] / vSpeedScaleExtend;
-
-	// draw line for Scales between virtual Horizon ###########################
-	c.beginPath();
-	c.moveTo(offset[0], offset[1]);
-	c.lineTo(offset[0], offset[1]+depthSize[1]);
-	// if framed draw box
-	if(framed){	c.rect(offset[0],offset[1],depthSize[0],depthSize[1]);}
-	c.stroke();
 
 	// depth Lines ############################################################
 	var i = depth%1; // transpose by difference ie. 12.25m => 0.25m 
@@ -53,34 +82,17 @@ function renderDepth(
 		drawDepthIndicator(offset, depthScale, i);
 		i = i-1;
 	}
-
-	// draw depth number ######################################################
-	// clear under text
-	c.clearRect(offset[0], 
-		offset[1] + depthSize[1]/2 - fontSize/2-4, 
-		depthSize[0], fontSize+4);
-	// draw text
-	c.textAlign = "right";
-	c.fillText(depth.toFixed(1), 
-		offset[0]+depthSize[0]-5, 
-		offset[1] + depthSize[1]/2 + fontSize/2-fontOffset, depthSize[0]-5);
-	// draw rectangle around
-	c.rect(offset[0], 
-		offset[1] + depthSize[1]/2 - fontSize/2-4, 
-		depthSize[0], fontSize+4);
-	c.stroke();
-
-	// draw vSpeed ############################################################
-	drawVSpeed(offset, vSpeedScale, vSpeedIndicator);
 }
 
 /**
  * Draw the vSpeed scale and Indicator.
  * @param {Number[2]} offset 
- * @param {Number} vSpeedScale 
  * @param {Number} vSpeedIndicator Size of indicator
+ * @param {Number} vSpeedScaleExtend
  */
-function drawVSpeed(offset, vSpeedScale, vSpeedIndicator){
+function drawVSpeed(offset, vSpeedIndicator, vSpeedScaleExtend){
+	const vSpeedScale = depthSize[1] / vSpeedScaleExtend;
+	
 	// small strokes
 	for(var i=0; i*vSpeedScale <= depthSize[1]/2; i+= 0.1){
 		drawDepthVSpeedTick(offset,vSpeedScale,i, 8);

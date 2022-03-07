@@ -43,6 +43,13 @@ function onStart(){
 	window.addEventListener('resize', onResize);
 	onResize();
 
+	// setup fullscreen
+	document.addEventListener("keydown", function(e) {
+		if (e.key === "f") {
+		  toggleFullScreen();
+		}
+	  }, false);
+
 	// render all
 	initializeAll();
 
@@ -52,9 +59,10 @@ function onStart(){
 
 // called on a window resize
 function onResize(){
-	// get window resolution
-	dim[0] = window.innerWidth;
-	dim[1] = window.innerHeight;
+	// get resolution off container
+	const container = document.getElementById("canvas-container");
+	dim[0] = container.offsetWidth;
+	dim[1] = container.offsetHeight;
 	
 	// get canvas elements
 	var background = document.getElementById("background");
@@ -111,5 +119,16 @@ function renderAll(){
 	renderBackground();
 	renderVirtualHorizon();
 	renderCompass();
-	renderDepth();
+	renderDepth(document.getElementById("selDepthMode").value);
 }
+
+
+function toggleFullScreen() {
+	if (!document.fullscreenElement) {
+		document.documentElement.requestFullscreen();
+	} else {
+	  if (document.exitFullscreen) {
+		document.exitFullscreen();
+	  }
+	}
+  }

@@ -6,7 +6,7 @@
 // global variables
 var animationFrameTime = 1/30;
 var frame = 0;
-var animationSpeedFaktor = 0;
+var animationSpeedFaktor = 1;
 
 /**
  * start the Animation

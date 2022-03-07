@@ -4,7 +4,7 @@
 
 <header>
 	<meta charset="utf-8">
-	<title>UI Demo</title>
+	<title>SIMLASUB UI</title>
 
 	<!-- load scripts -->
 	<script src="index.js"></script>
@@ -19,9 +19,23 @@
 </header>
 
 <body>
-	<canvas id="background" width="1920" height="1080"></canvas>
-	<canvas id="canvas" width="1920" height="1080"></canvas>
-	<canvas id="virtualHorizon" width="1920" height="1080"></canvas>
+	<div id="canvas-container" onclick="sideMenu()">
+		<canvas style="z-index: -3;" id="background"></canvas>
+		<canvas style="z-index: -2;" id="canvas"></canvas>
+		<canvas style="z-index: -1;" id="virtualHorizon"></canvas>
+	</div>
+
+	<div id="sideMenu">
+		<h2 style="text-align: left;">Features</h2>
+		<button onclick="toggleFullScreen()">Fullscreen</button>
+		<br>
+		<label for="selDepthMode">depth view: </label>
+		<select id="selDepthMode">
+			<option value="1">Full</option>
+			<option value="2">Number and speed</option>
+			<option value="3">Number</option>
+		</select>
+	</div>
 </body>
 
 <!-- call onStart() in index.js after everything else -->
