@@ -61,7 +61,7 @@ function renderDepth(mode){
 
 	// draw vSpeed ############################################################
 	if(mode<=2){
-		drawVSpeed(offset, vSpeedIndicator, vSpeedScaleExtend);
+		drawVSpeed(offset, vSpeedIndicator, vSpeedScaleExtend, mode);
 	}
 }
 
@@ -89,8 +89,9 @@ function drawDepthScale(offset, depthScaleExtend){
  * @param {Number[2]} offset 
  * @param {Number} vSpeedIndicator Size of indicator
  * @param {Number} vSpeedScaleExtend
+ * @param {Number} mode
  */
-function drawVSpeed(offset, vSpeedIndicator, vSpeedScaleExtend){
+function drawVSpeed(offset, vSpeedIndicator, vSpeedScaleExtend, mode){
 	const vSpeedScale = depthSize[1] / vSpeedScaleExtend;
 	
 	// small strokes
@@ -103,16 +104,19 @@ function drawVSpeed(offset, vSpeedIndicator, vSpeedScaleExtend){
 	}
 	// draw vSpeed Indicator
 	c.beginPath();
-	c.moveTo(offset[0], offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale);
+	const y = clamp(vSpeed*vSpeedScale, -vSpeedScale*depthSize[1]/2, vSpeedScale*depthSize[1]/2);
+	c.moveTo(offset[0], offset[1] + depthSize[1]/2 + y);
 	c.lineTo(offset[0]-vSpeedIndicator, 
-		offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale+vSpeedIndicator/1.2);
+		offset[1] + depthSize[1]/2 + y+vSpeedIndicator/1.2);
 	c.lineTo(offset[0]-vSpeedIndicator, 
-		offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale-vSpeedIndicator/1.2);
-	c.lineTo(offset[0], offset[1] + depthSize[1]/2 + vSpeed*vSpeedScale);
+		offset[1] + depthSize[1]/2 + y-vSpeedIndicator/1.2);
+	c.lineTo(offset[0], offset[1] + depthSize[1]/2 + y);
 	c.fill();
 	// draw vSpeed Text
-	c.textAlign = "right";
-	c.fillText(vSpeed.toFixed(2), offset[0]+depthSize[0], offset[1] -6, depthSize[0]);
+	if(mode<=1){
+		c.textAlign = "right";
+		c.fillText(vSpeed.toFixed(2), offset[0]+depthSize[0], offset[1] -6, depthSize[0]);
+	}	
 }
 
 /**

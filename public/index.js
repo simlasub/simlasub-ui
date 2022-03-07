@@ -118,7 +118,7 @@ function renderAll(){
 	// render all features
 	renderBackground();
 	renderVirtualHorizon();
-	renderCompass();
+	renderCompass(document.getElementById("selCompMode").value);
 	renderDepth(document.getElementById("selDepthMode").value);
 }
 
@@ -131,4 +131,5 @@ function toggleFullScreen() {
 		document.exitFullscreen();
 	  }
 	}
+	onResize();
   }
