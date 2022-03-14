@@ -29,7 +29,7 @@ const Depth = class {
 		this.vhOffset = features.virtualHorizon.offset;
 
 		// update Size and offset
-		this.size = [60*pixelRatio,this.vhSize[1]];
+		this.size = [80*pixelRatio, 0.8 * dim[1]];
 		this.offset = [ this.vhOffset[0]+this.vhSize[0], this.vhOffset[1] ];
 	}
 
@@ -46,7 +46,7 @@ const Depth = class {
 			this.c.beginPath();
 			this.c.moveTo(this.offset[0], this.offset[1]);
 			this.c.lineTo(this.offset[0], this.offset[1]+this.size[1]);
-			// if this.framed draw box
+			// if framed draw box
 			if(this.framed){	this.c.rect(this.offset[0],this.offset[1],this.size[0],this.size[1]);}
 			this.c.stroke();
 		}

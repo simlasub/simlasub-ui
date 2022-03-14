@@ -29,32 +29,42 @@
 			</div>
 	
 			<button onclick="toggleFullScreen()">Fullscreen</button>
+			<button onclick="onResize()" style="float: right;">Refresh</button>
 		</div>
 		<div class="box">
 			<h2>Indicator Settings</h2>
 			<div class="settingsGrid">
 				<label for="ranOpa">Opacity: </label>
-				<input type="range" min="0" max="1" value="1" class="slider" id="ranOpa" step="0.01" onmousemove="updateSettings()" onchange="updateSettings()">
-
+				<input type="range" min="0" max="1" value="1" class="slider" id="ranOpa" step="0.01" oninput="updateSettings()">
 
 				<label for="ranFontSize">Font Size: </label>
-				<input type="range" min="15" max="40" value="25" class="slider" id="ranFontSize"  onchange="updateSettings()">
+				<input type="range" min="15" max="40" value="25" class="slider" id="ranFontSize"  oninput="updateSettings()">
 
 				<label for="ranLineWith">Line Width: </label>
-				<input type="range" min="0.5" max="4" value="2.0" class="slider" id="ranLineWith"  step="0.1" onchange="updateSettings()">
+				<input type="range" min="0.5" max="4" value="2.0" class="slider" id="ranLineWith"  step="0.1" oninput="updateSettings()">
 
-				<label for="selDepthMode">Depth: </label>
+				<label for="colMain">Main color: </label>
+				<input id="colMain" type="color" value="#e88300" oninput="updateSettings()">
+
+				<label for="selDepthMode">Depth Mode: </label>
 				<select id="selDepthMode" onchange="updateSettings()">
 					<option value="1">Full</option>
 					<option value="2">Number and speed</option>
 					<option value="3">Number</option>
 				</select>
 				
-				<label for="selCompMode">Compass: </label>
+				<label for="selCompMode">Compass Mode: </label>
 				<select id="selCompMode" onchange="updateSettings()">
 					<option value="1">Full</option>
-					<option value="2">Number</option>
+					<option value="2">Simplified</option>
+					<option value="3">Number</option>
 				</select>
+
+				<label for="selCompMode" for="chkVhClip">VH clipping: </label>
+				<input type="checkbox" id="chkVhClip" checked="true" oninput="updateSettings()">
+
+				<label for="selCompMode" for="chkVhComp">VH compass: </label>
+				<input type="checkbox" id="chkVhComp" checked="true" oninput="updateSettings()">
 			</div>
 		</div>
 		<div class="box" style="resize: vertical;">

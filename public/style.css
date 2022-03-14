@@ -14,6 +14,11 @@ input, select, button{
 	margin: 10px;
 	min-width: 10em;
 	max-width: 20em;
+
+	display: inline-block;
+	text-decoration: none;
+	border-radius: 4px;
+
 }
 
 button{	
@@ -86,6 +91,7 @@ canvas{
 	position: absolute;
 	width: 100%;
 	height: 100%;
+
 }
 
 #canvas-container{
@@ -104,7 +110,7 @@ canvas{
 
 #box-canvas{
 	max-width: calc(100vw - 40px);
-	width: 50em;
+	width: 80em;
 	height: auto;
 	resize: horizontal;
 }

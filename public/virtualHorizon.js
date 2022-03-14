@@ -13,6 +13,7 @@ const VirtualHorizon = class{
 	framed = false;
 	compSize = 10;
 	transform = true; // disables the transformation
+	compass = true;
 
 	/**
 	 * 
@@ -32,8 +33,8 @@ const VirtualHorizon = class{
 		this.c.lineWidth = lineWidth;
 
 		// update variables with new screen dimensions
-		this.size = [dim[0]*0.7 - 160*pixelRatio,dim[1] * 0.8];
-		this.offset = [dim[0]/2-this.size[0]/2, dim[1]/2-this.size[1]/2];
+		this.size = [dim[0]*0.7 - 160*pixelRatio,dim[1] * 0.6];
+		this.offset = [dim[0]/2-this.size[0]/2, dim[1]/2-this.size[1]/2 - dim[1]*0.1];
 		this.paraLength = 0.2*(this.size[0]-fontSize*3);
 		this.centerSpace = 0.3 * this.paraLength;
 
@@ -74,7 +75,6 @@ const VirtualHorizon = class{
 		this.c.lineWidth = lineWidth;
 
 
-
 		// this.transform the canvas ###################################################
 		if(this.transform){
 			// roll this.transform
@@ -97,30 +97,32 @@ const VirtualHorizon = class{
 		this.c.stroke();
 
 		// draw compass ###########################################################
-		for(let i = -360; i < 360; i+=10) {
-			// translate by heading
-			let j = i + stat.heading;
+		if(this.compass){
+			for(let i = -360; i < 360; i+=10) {
+				// translate by heading
+				let j = i + stat.heading;
 
-			// draw ticks
-			if(i%90==0){ // north, east, south and west
-				this.c.beginPath();
-				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-this.compSize);
-				this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y+this.compSize);
-				this.c.stroke();
+				// draw ticks
+				if(i%90==0){ // north, east, south and west
+					this.c.beginPath();
+					this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-this.compSize);
+					this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y+this.compSize);
+					this.c.stroke();
 
-			}else{ // all other 10° steps
-				this.c.beginPath();
-				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-this.compSize);
-				this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y);
-				this.c.stroke();
+				}else{ // all other 10° steps
+					this.c.beginPath();
+					this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-this.compSize);
+					this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y);
+					this.c.stroke();
+				}
+				
+				// draw text
+				this.c.textAlign = "center";
+				this.c.fillText(((360-i)%360).toFixed(0)/*.padStart(3, '0')*/, 
+					dim[0]/2 - j*this.pixelPerDegree, // x position
+					y -this.compSize - fontSize/2 +fontOffset, 3* fontSize // y position
+					);
 			}
-			
-			// draw text
-			this.c.textAlign = "center";
-			this.c.fillText(((360-i)%360).toFixed(0).padStart(3, '0'), 
-				dim[0]/2 - j*this.pixelPerDegree, // x position
-				y -this.compSize - fontSize/2 +fontOffset, 3* fontSize // y position
-				);
 		}
 
 		// draw parallels #########################################################

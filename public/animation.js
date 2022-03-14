@@ -31,7 +31,8 @@ function renderAnimation(){
 	stat.pitch = Math.sin(time * 0.05)*20 + Math.sin(time * 0.1)*1 + Math.sin(time * 3.5)*0.2;
 
 	// rotate the heading linearly (2 °/s) the 360 is there to cap the value between 0-360
-	stat.heading = (360 + time*2)% 360;
+	stat.heading = (360 + time*2 + Math.sin(time * 0.2)*2.5)% 360;
+	stat.turnSpeed = 2 + Math.cos(time * 0.2)*2.5*0.2
 
 	// generate depth and vSpeed as second derivative of depth
 	stat.depth = 5 + 0.05*Math.cos(time) - 5*Math.cos(time * 0.08);

@@ -1,5 +1,5 @@
 // global variables
-const colors = ["#e88300", "#006198","#e80000"];
+var colors = ["#e88300", "#006198","#e80000"];
 const pixelRatio = window.devicePixelRatio || 1; // get screen scale factor (or 1 if unavailable)
 var lineWidth = 2.0 * pixelRatio;
 var fontSize = 25 * pixelRatio;
@@ -12,7 +12,7 @@ var b, c, vh; // for canvas elements
 
 // status
 var stat = {
-	roll: 0, pitch:0, heading: 0,
+	roll: 0, pitch:0, heading: 0, turnSpeed: 0,
 	xSpeed: 0, ySpeed: 0, zSpeed: 0, 
 	depth:0, vSpeed: 0,
 	armed: true,
@@ -58,7 +58,6 @@ function onStart(){
 
 	// start Animation
 	startAnimation();
-
 }
 
 // called on a window resize
@@ -136,14 +135,22 @@ function updateSettings(){
 	// line Width
 	lineWidth = parseFloat(document.getElementById("ranLineWith").value) * pixelRatio;
 
+	// color
+	colors[0] = document.getElementById("colMain").value;
+
+	// feature Settings
 	features.depth.mode = document.getElementById("selDepthMode").value;
 	features.compass.mode = document.getElementById("selCompMode").value;
-
+	features.virtualHorizon.clip = document.getElementById("chkVhClip").checked;
+	features.virtualHorizon.compass = document.getElementById("chkVhComp").checked;
 	// update all
-	initializeAll();
+	onResize();
 }
 
 
+/**
+ * toggles the fullscreen view of the canvas-container
+ */
 function toggleFullScreen() {
 	// get container
 	var container = document.getElementById("canvas-container");
