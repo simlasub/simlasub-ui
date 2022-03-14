@@ -5,9 +5,16 @@ body {
 	background-color:#f4f6f8;
 	margin: 0;
 }
-input{
-	margin: 5px;
-	width: clamp(5em, 90%,20em);
+
+label{
+	display: inline-block;
+}
+
+
+input, select, button{
+	margin: 10px;
+	min-width: 10em;
+	max-width: 20em;
 }
 
 button{	
@@ -38,10 +45,6 @@ button:hover{
 
 button:active {
 	transform: scale(0.95);
-}
-
-select {
-	width: 12em;
 }
 
 .flex{
@@ -95,7 +98,6 @@ canvas{
 .settingsGrid{
 	display: grid;
     grid-template-columns: max-content max-content;
-    grid-gap: 20px;
 	align-items: center;
 	align-content: center;
 }

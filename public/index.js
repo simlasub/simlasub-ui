@@ -128,14 +128,23 @@ function toggleFullScreen() {
 	// get container
 	var container = document.getElementById("canvas-container");
 
-	// set fullscreen (different browsers have different function names)
-	if(container.requestFullScreen){
-		container.requestFullScreen();}
-	else if(container.webkitRequestFullScreen){
-		container.webkitRequestFullScreen();}
-	else if(container.mozRequestFullScreen){
-		container.mozRequestFullScreen();
+	// check current fullscreen element
+	if(document.fullscreenElement === container){
+		document.exitFullscreen();
 	}
+	else{
+		// set fullscreen (different browsers have different function names)
+		if(container.requestFullScreen){
+			container.requestFullScreen();}
+		else if(container.webkitRequestFullScreen){
+			container.webkitRequestFullScreen();}
+		else if(container.mozRequestFullScreen){
+			container.mozRequestFullScreen();
+		}
+	}
+
+	// force redraw of css
+	document.resize();
 
 	// update resolution
 	onResize();
