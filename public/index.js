@@ -30,6 +30,8 @@ var minBattery = 6;
 var resBattery = 8;
 var lastError = "NO ERROR";
 
+var features = {};
+
 /**
  * this function is called after everything is loaded
  */
@@ -38,6 +40,12 @@ function onStart(){
 	b = document.getElementById("background").getContext("2d");
 	c = document.getElementById("canvas").getContext("2d");
 	vh = document.getElementById("virtualHorizon").getContext("2d");
+
+	// initialize features
+	features.background = new Background(b);
+	features.virtualHorizon = new VirtualHorizon(vh);
+	features.compass = new Compass(c);
+	features.depth = new Depth(c);
 
 	// setup resize function
 	window.addEventListener('resize', onResize);
@@ -56,6 +64,7 @@ function onStart(){
 
 	// start Animation
 	startAnimation();
+
 }
 
 // called on a window resize
@@ -97,12 +106,12 @@ function initializeAll(){
 	vh.fillStyle = colors[0];
 	vh.lineWidth = lineWidth;
 	vh.font = font;
-	
+
 	// initialize all features
-	initializeBackground();
-	initializeVirtualHorizon();
-	initializeCompass();
-	initializeDepth(); // depends on vhSize[] from initializeVirtualHorizon()
+	Object.values(features).map(obj => obj.initialize(dim));
+
+	// update Settings
+	updateSettings();
 
 	// render all
 	renderAll();
@@ -117,10 +126,15 @@ function renderAll(){
 	vh.clearRect(0, 0, dim[0], dim[1]);
 
 	// render all features
-	renderBackground();
-	renderVirtualHorizon();
-	renderCompass(document.getElementById("selCompMode").value);
-	renderDepth(document.getElementById("selDepthMode").value);
+	Object.values(features).map(obj => obj.render());
+}
+
+/**
+ * reads the settings and updates the variables
+ */
+function updateSettings(){
+	features.depth.mode = document.getElementById("selDepthMode").value;
+	features.compass.mode = document.getElementById("selCompMode").value;
 }
 
 
@@ -143,8 +157,10 @@ function toggleFullScreen() {
 		}
 	}
 
-	// force redraw of css
-	document.resize();
+	// force redraw of css (only works in chrome)
+	if(document.resize){
+		document.resize();
+	}
 
 	// update resolution
 	onResize();

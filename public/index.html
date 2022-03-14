@@ -34,13 +34,13 @@
 			<h2>Indicator Settings</h2>
 			<div class="settingsGrid">
 				<label for="selDepthMode">Depth: </label>
-				<select id="selDepthMode">
+				<select id="selDepthMode" onchange="updateSettings()">
 					<option value="1">Full</option>
 					<option value="2">Number and speed</option>
 					<option value="3">Number</option>
 				</select>
 				<label for="selCompMode">Compass: </label>
-				<select id="selCompMode">
+				<select id="selCompMode" onchange="updateSettings()">
 					<option value="1">Full</option>
 					<option value="2">Number</option>
 				</select>
