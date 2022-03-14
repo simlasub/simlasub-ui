@@ -10,25 +10,17 @@ var pixelPerDegree = 20;
 
 var b, c, vh; // for canvas elements
 
-// status variables, maybe store in dictionary?
-/*var stat = {
+// status
+var stat = {
 	roll: 0, pitch:0, heading: 0,
 	xSpeed: 0, ySpeed: 0, zSpeed: 0, 
 	depth:0, vSpeed: 0,
 	armed: true,
 	battery: 10, maxBat: 14, minBat: 6, resBat: 8,
-	lastError: "NO ERROR"
-};*/
-var roll = pitch = heading = 0;
-var xSpeed = ySpeed = zSpeed = vSpeed = 0;
-var depth = 0;
-var mode = "disarmed";
-var armed = false;
-var battery = 10;
-var maxBattery = 14;
-var minBattery = 6;
-var resBattery = 8;
-var lastError = "NO ERROR";
+	lastError: "NO ERROR",
+	time: 0
+};
+var features = {};
 
 /**
  * this function is called after everything is loaded
@@ -38,6 +30,12 @@ function onStart(){
 	b = document.getElementById("background").getContext("2d");
 	c = document.getElementById("canvas").getContext("2d");
 	vh = document.getElementById("virtualHorizon").getContext("2d");
+
+	// initialize features
+	features.background = new Background(b);
+	features.virtualHorizon = new VirtualHorizon(vh);
+	features.compass = new Compass(c);
+	features.depth = new Depth(c);
 
 	// setup resize function
 	window.addEventListener('resize', onResize);
@@ -56,6 +54,7 @@ function onStart(){
 
 	// start Animation
 	startAnimation();
+
 }
 
 // called on a window resize
@@ -97,19 +96,19 @@ function initializeAll(){
 	vh.fillStyle = colors[0];
 	vh.lineWidth = lineWidth;
 	vh.font = font;
-	
+
 	// initialize all features
-	initializeBackground();
-	initializeVirtualHorizon();
-	initializeCompass();
-	initializeDepth(); // depends on vhSize[] from initializeVirtualHorizon()
+	Object.values(features).map(obj => obj.initialize(dim));
+
+	// update Settings
+	updateSettings();
 
 	// render all
 	renderAll();
 }
 
 /**
- * renders all active features
+ * renders all features with stat variable
  */
 function renderAll(){
 	// clear all canvases
@@ -117,10 +116,15 @@ function renderAll(){
 	vh.clearRect(0, 0, dim[0], dim[1]);
 
 	// render all features
-	renderBackground();
-	renderVirtualHorizon();
-	renderCompass(document.getElementById("selCompMode").value);
-	renderDepth(document.getElementById("selDepthMode").value);
+	Object.values(features).map(obj => obj.render(stat));
+}
+
+/**
+ * reads the settings and updates the variables
+ */
+function updateSettings(){
+	features.depth.mode = document.getElementById("selDepthMode").value;
+	features.compass.mode = document.getElementById("selCompMode").value;
 }
 
 
@@ -143,8 +147,10 @@ function toggleFullScreen() {
 		}
 	}
 
-	// force redraw of css
-	document.resize();
+	// force redraw of css (only works in chrome)
+	if(document.resize){
+		document.resize();
+	}
 
 	// update resolution
 	onResize();

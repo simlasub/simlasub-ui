@@ -71,6 +71,21 @@ button:active {
 	min-width: min-content;
 }
 
+table {
+	text-align: left;
+	border-collapse: collapse;
+ 	padding: 5px;
+	margin: 5px;
+}
+td, th{
+	border: 1px solid #ddd;
+	padding: 5px;
+	min-width: 7em;
+}
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+
+
 /* CSS for the canvases #######################################################*/
 
 canvas{

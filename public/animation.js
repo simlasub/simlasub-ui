@@ -24,16 +24,18 @@ function renderAnimation(){
 	frame++;
 	const time = frame * animationFrameTime * animationSpeedFaktor;
 
+	stat.time = time;
+
 	// calculate roll and pitch for virtual Horizon with added sin curves
-	roll = Math.sin(time * 0.2)*2.5 + Math.sin(time * 3)*0.5;
-	pitch = Math.sin(time * 0.05)*20 + Math.sin(time * 0.1)*1 + Math.sin(time * 3.5)*0.2;
+	stat.roll = Math.sin(time * 0.2)*2.5 + Math.sin(time * 3)*0.5;
+	stat.pitch = Math.sin(time * 0.05)*20 + Math.sin(time * 0.1)*1 + Math.sin(time * 3.5)*0.2;
 
 	// rotate the heading linearly (2 °/s) the 360 is there to cap the value between 0-360
-	heading = (360 + time*2)% 360;
+	stat.heading = (360 + time*2)% 360;
 
 	// generate depth and vSpeed as second derivative of depth
-	depth = 5 + 0.05*Math.cos(time) - 5*Math.cos(time * 0.08);
-	vSpeed = - 0.05*Math.sin(time) + 0.08*5*Math.sin(time * 0.08);
+	stat.depth = 5 + 0.05*Math.cos(time) - 5*Math.cos(time * 0.08);
+	stat.vSpeed = - 0.05*Math.sin(time) + 0.08*5*Math.sin(time * 0.08);
 
 	// render all
 	// and optionally log the evaluation time
