@@ -41,6 +41,7 @@ function onStart(){
 
 	// setup resize function
 	window.addEventListener('resize', onResize);
+	document.getElementById("canvas-container").addEventListener('resize', onResize);
 	onResize();
 
 	// setup fullscreen
@@ -124,12 +125,18 @@ function renderAll(){
 
 
 function toggleFullScreen() {
-	if (!document.fullscreenElement) {
-		document.documentElement.requestFullscreen();
-	} else {
-	  if (document.exitFullscreen) {
-		document.exitFullscreen();
-	  }
+	// get container
+	var container = document.getElementById("canvas-container");
+
+	// set fullscreen (different browsers have different function names)
+	if(container.requestFullScreen){
+		container.requestFullScreen();}
+	else if(container.webkitRequestFullScreen){
+		container.webkitRequestFullScreen();}
+	else if(container.mozRequestFullScreen){
+		container.mozRequestFullScreen();
 	}
+
+	// update resolution
 	onResize();
   }

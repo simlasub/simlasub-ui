@@ -5,19 +5,35 @@ body {
 	background-color:#f4f6f8;
 	margin: 0;
 }
+input{
+	margin: 5px;
+	width: clamp(5em, 90%,20em);
+}
 
-button{
+button{	
+	margin: 10px;
+	min-height: 32px;
+	width: clamp(5em, 45%, 12em);
+
 	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 	text-decoration: none;
-	margin: 5px;
-	min-width: 32px;
-	min-width: 32px;
 
 	border-radius: 4px;
 	display: inline-block;
 	background-color: transparent;
-	border: 2px solid #f4f6f8;
-	color: #f4f6f8;
+	border: 2px solid #006198;
+	color: #006198;
+}
+
+.center{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+button:hover{
+	background-color: #006198;
+	color: white;
 }
 
 button:active {
@@ -25,58 +41,64 @@ button:active {
 }
 
 select {
-	margin-top: 10px;
-	width: 10em;
+	width: 12em;
 }
 
-label {
-	align-self: left;
-	margin-top: 20px;
+.flex{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.box {
+	min-width: 15em;
+	min-height: 2em;
+
+	background-color: white;
+
+	padding: 10px;
+	margin: 10px;
+	
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+	align-items: center;
+	justify-content: center;
+
+	min-width: min-content;
 }
 
 /* CSS for the canvases #######################################################*/
 
 canvas{
 	position: absolute;
-	left: 0;
-	top: 0;
 	width: 100%;
 	height: 100%;
 }
 
 #canvas-container{
-	position: absolute;
+	display: block;
+	position: relative;
+	
 	padding: 0;
 	margin: 0;
-	width: 100%;
-	height: 100%;
+
+	max-width: calc(100vw - 40px);
+	width: 50em;
+	height: auto;
+	aspect-ratio: 16/9;
+	
+	text-align: left;
 }
 
-
-/* CSS for the side menu ######################################################*/
-
-#sideMenu {
-	height: 100%;
-	max-width:20em;
-	width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: #101010d0;
-	overflow-x: hidden;
-	padding: 20px;
-	color: #f4f6f8;
-	text-align: center;
-	opacity: 0;
-	transition: 0.3s;
+/* CSS for Settings ##############################################################*/
+.settingsGrid{
+	display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 20px;
+	align-items: center;
+	align-content: center;
 }
-
-#sideMenu:hover{
-	opacity: 100%;
+.settingsGrid label{
+	text-align: left;
 }
-
-#sideMenu label{
-	align-self: left;
-	margin: 10px;
-}
-  

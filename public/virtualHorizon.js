@@ -52,23 +52,14 @@ function renderVirtualHorizon(){
 	}
 
 	// draw Center indicator ##################################################
-	/*
 	// airplane style 
+	vh.lineWidth = 1.0*lineWidth;
 	vh.beginPath();
 	vh.moveTo(dim[0]/2-vhCenterSpacing,dim[1]/2);
 	vh.lineTo(dim[0]/2-vhCenterSpacing/3,dim[1]/2);
 	vh.lineTo(dim[0]/2,dim[1]/2+vhCenterSpacing/3);
 	vh.lineTo(dim[0]/2+vhCenterSpacing/3,dim[1]/2);
 	vh.lineTo(dim[0]/2+vhCenterSpacing,dim[1]/2);
-	vh.stroke();*/
-	vh.lineWidth = 1.0*lineWidth;
-	vh.beginPath();
-	vh.moveTo(dim[0]/2-vhCenterSpacing,dim[1]/2);
-	vh.lineTo(dim[0]/2+vhCenterSpacing,dim[1]/2);
-	vh.stroke();
-	vh.beginPath();
-	vh.moveTo(dim[0]/2,dim[1]/2);
-	vh.lineTo(dim[0]/2,dim[1]/2-vhCenterSpacing/1.5);
 	vh.stroke();
 	vh.lineWidth = lineWidth;
 

@@ -25,19 +25,19 @@ function renderCompass(mode){
 	const centerSize = 5; // for north indicator
 
 	if(mode<=1){
-		// draw circular frame ####################################################
+		// draw circular frame #################################################
 		if(framed){
 			c.beginPath();
 			c.arc(offset[0], offset[1], compassRadius, 0, 2*Math.PI);
-			c.stroke();
+			c.stroke();2
 		}
 
-		// draw center ########################################################
+		// draw center #########################################################
 		c.beginPath();
 		c.arc(offset[0], offset[1], centerSize, 0, 2*Math.PI);
 		c.fill();
 
-		// draw North indicator ###############################################
+		// draw North indicator ################################################
 		c.beginPath();
 		c.lineTo(
 			offset[0] - innerRad * Math.sin(degToRad(heading)), 
@@ -53,7 +53,7 @@ function renderCompass(mode){
 			offset[1] - innerRad * Math.cos(degToRad(heading)));
 		c.fill();
 
-		// draw indicators ####################################################
+		// draw indicators #####################################################
 		for(let i = 0; i < 360; i+=10) {
 			// rotate by heading
 			let j = i + heading;
@@ -81,7 +81,7 @@ function renderCompass(mode){
 			
 		}
 
-		// draw indicator needle ##############################################
+		// draw indicator needle ###############################################
 		c.beginPath();
 		c.moveTo(offset[0], offset[1]-compassRadius);
 		c.lineTo(offset[0]+indicator/2, offset[1]-compassRadius-indicator);
@@ -89,15 +89,15 @@ function renderCompass(mode){
 		c.lineTo(offset[0], offset[1]-compassRadius);
 		c.fill();
 
-		// heading text #######################################################
+		// heading text ########################################################
 		c.textAlign = "left";
 		c.fillText(heading.toFixed(0).padStart(3, '0'), 
 			offset[0] + compassRadius + 5, 
 			offset[1]);
 	}
-	else if(mode ==2){
-		// heading text #######################################################
-		c.textAlign = "left";
+	else if(mode==2){
+		// heading text ########################################################
+		c.textAlign = "center";
 		c.fillText(heading.toFixed(0).padStart(3, '0'), 
 			offset[0], 
 			offset[1]);

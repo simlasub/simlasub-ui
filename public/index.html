@@ -5,6 +5,7 @@
 <header>
 	<meta charset="utf-8">
 	<title>SIMLASUB UI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- load scripts -->
 	<script src="index.js"></script>
@@ -19,30 +20,35 @@
 </header>
 
 <body>
-	<div id="canvas-container" onclick="sideMenu()">
-		<canvas style="z-index: -3;" id="background"></canvas>
-		<canvas style="z-index: -2;" id="canvas"></canvas>
-		<canvas style="z-index: -1;" id="virtualHorizon"></canvas>
-	</div>
-
-	<div id="sideMenu">
-		<button onclick="toggleFullScreen()">Fullscreen</button>
-		<h2 style="text-align: left;">Features</h2>
-		<label for="selDepthMode">Depth: </label>
-		<select id="selDepthMode">
-			<option value="1">Full</option>
-			<option value="2">Number and speed</option>
-			<option value="3">Number</option>
-		</select>
-		<br>
-		<label for="selCompMode">Compass: </label>
-		<select id="selCompMode">
-			<option value="1">Full</option>
-			<option value="2">Number</option>
-		</select>
+	<div class="flex">
+		<div class="box" id="box-canvas">
+			<div id="canvas-container" onclick="sideMenu()">
+				<canvas style="z-index: 1;" id="background"></canvas>
+				<canvas style="z-index: 2;" id="canvas"></canvas>
+				<canvas style="z-index: 3;" id="virtualHorizon"></canvas>
+			</div>
+	
+			<button onclick="toggleFullScreen()">Fullscreen</button>
+		</div>
+		<div class="box">
+			<h2>Indicator Settings</h2>
+			<div class="settingsGrid">
+				<label for="selDepthMode">Depth: </label>
+				<select id="selDepthMode">
+					<option value="1">Full</option>
+					<option value="2">Number and speed</option>
+					<option value="3">Number</option>
+				</select>
+				<label for="selCompMode">Compass: </label>
+				<select id="selCompMode">
+					<option value="1">Full</option>
+					<option value="2">Number</option>
+				</select>
+			</div>
+		</div>
 	</div>
 </body>
 
-<!-- call onStart() in index.js after everything else -->
+<!-- call onStart() in index.js after everything else loaded -->
 <script>onStart()</script>
 </html>
