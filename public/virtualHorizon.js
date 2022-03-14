@@ -8,6 +8,11 @@ const VirtualHorizon = class{
 	paraLength = 200; // half-length of horizon parallels
 	centerSpace = 20; // half-length of center spacing
 	pixelPerDegree;
+	parallelDistance = 10; // in degrees
+	clip = true;
+	framed = false;
+	compSize = 10;
+	transform = true; // disables the transformation
 
 	/**
 	 * 
@@ -27,7 +32,7 @@ const VirtualHorizon = class{
 		this.c.lineWidth = lineWidth;
 
 		// update variables with new screen dimensions
-		this.size = [dim[0]*0.7 - 160,dim[1] * 0.8];
+		this.size = [dim[0]*0.7 - 160*pixelRatio,dim[1] * 0.8];
 		this.offset = [dim[0]/2-this.size[0]/2, dim[1]/2-this.size[1]/2];
 		this.paraLength = 0.2*(this.size[0]-fontSize*3);
 		this.centerSpace = 0.3 * this.paraLength;
@@ -40,12 +45,6 @@ const VirtualHorizon = class{
 	 * renders the virtual horizon, the paralles and the horizon compass
 	 */
 	render(stat){
-		// set parameters
-		const parallelDistance = 10; // in degrees
-		const clip = true;
-		const framed = false;
-		const vhCompassSize = 10;
-		const vhDebug = false; // disables the transformation
 		// resulting
 		const y = dim[1]/2; // shortcut for readability
 
@@ -55,11 +54,11 @@ const VirtualHorizon = class{
 		this.c.beginPath();
 
 		// Clip a rectangular area for virtual horizon ############################
-		if(clip){
+		if(this.clip){
 			//this.c.beginPath();
 			this.c.rect(this.offset[0],this.offset[1], this.size[0], this.size[1]);
-			if(framed){this.c.stroke();}
-			this.c.clip();
+			if(this.framed){this.c.stroke();}
+			this.c.clip(); 
 		}
 
 		// draw Center indicator ##################################################
@@ -76,13 +75,13 @@ const VirtualHorizon = class{
 
 
 
-		// transform the canvas ###################################################
-		if(!vhDebug){
-			// roll transform
+		// this.transform the canvas ###################################################
+		if(this.transform){
+			// roll this.transform
 			this.c.translate(dim[0]/2,dim[1]/2);
 			this.c.rotate(degToRad(stat.roll));
 			this.c.translate(-dim[0]/2,-dim[1]/2);
-			// pitch transform
+			// pitch this.transform
 			this.c.translate(0,stat.pitch*this.pixelPerDegree);
 		}
 
@@ -105,13 +104,13 @@ const VirtualHorizon = class{
 			// draw ticks
 			if(i%90==0){ // north, east, south and west
 				this.c.beginPath();
-				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-vhCompassSize);
-				this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y+vhCompassSize);
+				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-this.compSize);
+				this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y+this.compSize);
 				this.c.stroke();
 
 			}else{ // all other 10° steps
 				this.c.beginPath();
-				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-vhCompassSize);
+				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-this.compSize);
 				this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y);
 				this.c.stroke();
 			}
@@ -120,7 +119,7 @@ const VirtualHorizon = class{
 			this.c.textAlign = "center";
 			this.c.fillText(((360-i)%360).toFixed(0).padStart(3, '0'), 
 				dim[0]/2 - j*this.pixelPerDegree, // x position
-				y -vhCompassSize - fontSize/2 +fontOffset, 3* fontSize // y position
+				y -this.compSize - fontSize/2 +fontOffset, 3* fontSize // y position
 				);
 		}
 
@@ -128,14 +127,14 @@ const VirtualHorizon = class{
 		// draw top parallel
 		for(var i = 1; i<18; i++){
 			this.drawVirtualHorizon_Parallel(
-				dim[1]/2 - i*parallelDistance*this.pixelPerDegree, // y coordinate
+				dim[1]/2 - i*this.parallelDistance*this.pixelPerDegree, // y coordinate
 				this.centerSpace, this.paraLength);
 			
 			// draw text
 			this.c.textAlign = "left";
-			this.c.fillText(i*parallelDistance, 
+			this.c.fillText(i*this.parallelDistance, 
 				dim[0]/2+this.paraLength+10, // x
-				dim[1]/2 - i*parallelDistance*this.pixelPerDegree + fontSize/2 -fontOffset, // y
+				dim[1]/2 - i*this.parallelDistance*this.pixelPerDegree + fontSize/2 -fontOffset, // y
 				3* fontSize); // width
 		}
 
@@ -143,14 +142,14 @@ const VirtualHorizon = class{
 		this.c.setLineDash([15,10]);
 		for(var i = 1; i<18; i++){
 			this.drawVirtualHorizon_Parallel(
-				dim[1]/2 + i*parallelDistance*this.pixelPerDegree, // y coordinate
+				dim[1]/2 + i*this.parallelDistance*this.pixelPerDegree, // y coordinate
 				this.centerSpace, this.paraLength);
 			
 			// draw Text
 			this.c.textAlign = "left";
-			this.c.fillText(i*parallelDistance, 
+			this.c.fillText(i*this.parallelDistance, 
 				dim[0]/2+this.paraLength+10, // x
-				dim[1]/2 + i*parallelDistance*this.pixelPerDegree + fontSize/2 -fontOffset, // y
+				dim[1]/2 + i*this.parallelDistance*this.pixelPerDegree + fontSize/2 -fontOffset, // y
 				3* fontSize); // width
 		}
 		this.c.setLineDash([1,0]);

@@ -4,12 +4,12 @@
  */
 const Compass = class {
 	mode = 1;
-	radius = 20;
+	radius = 20*pixelRatio;
 	offset;
 	framed = false; // mostly for layout
 	innerRad; 
-	indicator = 10; // size for top needle
-	centerSize = 5; // for north indicator
+	indicator = 10*pixelRatio; // size for top needle
+	centerSize = 5*pixelRatio; // for north indicator
 
 	/**
 	 * @param {canvas context} can 
@@ -91,9 +91,9 @@ const Compass = class {
 			// draw indicator needle ###############################################
 			this.c.beginPath();
 			this.c.moveTo(this.offset[0], this.offset[1]-this.radius);
-			this.c.lineTo(this.offset[0]+this.indicator, 
+			this.c.lineTo(this.offset[0]+this.indicator/1.5, 
 				this.offset[1]-this.radius-this.indicator);
-			this.c.lineTo(this.offset[0]-this.indicator, 
+			this.c.lineTo(this.offset[0]-this.indicator/1.5, 
 				this.offset[1]-this.radius-this.indicator);
 			this.c.lineTo(this.offset[0], this.offset[1]-this.radius);
 			this.c.fill();

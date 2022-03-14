@@ -1,10 +1,11 @@
 // global variables
-var dim = [1920,1080];
 const colors = ["#e88300", "#006198","#e80000"];
-var lineWidth = 2.0;
-var fontSize = 25;
-const fontOffset = 6;
-var font = fontSize + "px sans-serif";
+const pixelRatio = window.devicePixelRatio || 1; // get screen scale factor (or 1 if unavailable)
+var lineWidth = 2.0 * pixelRatio;
+var fontSize = 25 * pixelRatio;
+const fontOffset = 6 * pixelRatio;
+var font;
+var dim = [1920 * pixelRatio, 1080 * pixelRatio];
 var opacity = 1.0; // overlay opacity
 
 var b, c, vh; // for canvas elements
@@ -40,16 +41,17 @@ function onStart(){
 	updateSettings();
 
 	// setup resize function
-	window.addEventListener('resize', onResize);
+	window.addEventListener("resize", onResize);
 	document.getElementById("canvas-container").addEventListener('resize', onResize);
 	onResize();
+	document.addEventListener("fullscreenchange",onResize);
 
 	// setup fullscreen
 	document.addEventListener("keydown", function(e) {
 		if (e.key === "f") {
 		  toggleFullScreen();
 		}
-	  }, false);
+	  }, true);
 
 	// render all
 	initializeAll();
@@ -63,8 +65,10 @@ function onStart(){
 function onResize(){
 	// get resolution off container
 	const container = document.getElementById("canvas-container");
-	dim[0] = container.offsetWidth;
-	dim[1] = container.offsetHeight;
+
+	// update canvas dimensions
+	dim[0] = container.offsetWidth * pixelRatio;
+	dim[1] = container.offsetHeight * pixelRatio;
 	
 	// get canvas elements
 	var background = document.getElementById("background");
@@ -127,10 +131,10 @@ function updateSettings(){
 	// opacity
 	opacity = Math.pow(parseFloat(document.getElementById("ranOpa").value),1/2.2);
 	// font Size
-	fontSize = parseFloat(document.getElementById("ranFontSize").value);
+	fontSize = parseFloat(document.getElementById("ranFontSize").value) * pixelRatio;
 	font = fontSize + "px sans-serif";
 	// line Width
-	lineWidth = parseFloat(document.getElementById("ranLineWith").value)
+	lineWidth = parseFloat(document.getElementById("ranLineWith").value) * pixelRatio;
 
 	features.depth.mode = document.getElementById("selDepthMode").value;
 	features.compass.mode = document.getElementById("selCompMode").value;
@@ -163,7 +167,4 @@ function toggleFullScreen() {
 	if(document.resize){
 		document.resize();
 	}
-
-	// update resolution
-	onResize();
   }
