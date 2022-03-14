@@ -7,6 +7,7 @@ const VirtualHorizon = class{
 	size;
 	paraLength = 200; // half-length of horizon parallels
 	centerSpace = 20; // half-length of center spacing
+	pixelPerDegree;
 
 	/**
 	 * 
@@ -30,6 +31,9 @@ const VirtualHorizon = class{
 		this.offset = [dim[0]/2-this.size[0]/2, dim[1]/2-this.size[1]/2];
 		this.paraLength = 0.2*(this.size[0]-fontSize*3);
 		this.centerSpace = 0.3 * this.paraLength;
+
+		// get ppD
+		this.pixelPerDegree = features.background.pixelPerDegree;
 	}
 
 	/**
@@ -79,7 +83,7 @@ const VirtualHorizon = class{
 			this.c.rotate(degToRad(stat.roll));
 			this.c.translate(-dim[0]/2,-dim[1]/2);
 			// pitch transform
-			this.c.translate(0,stat.pitch*pixelPerDegree);
+			this.c.translate(0,stat.pitch*this.pixelPerDegree);
 		}
 
 		// draw horizon ###########################################################
@@ -101,21 +105,21 @@ const VirtualHorizon = class{
 			// draw ticks
 			if(i%90==0){ // north, east, south and west
 				this.c.beginPath();
-				this.c.moveTo(dim[0]/2 - j*pixelPerDegree, y-vhCompassSize);
-				this.c.lineTo(dim[0]/2 - j*pixelPerDegree, y+vhCompassSize);
+				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-vhCompassSize);
+				this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y+vhCompassSize);
 				this.c.stroke();
 
 			}else{ // all other 10° steps
 				this.c.beginPath();
-				this.c.moveTo(dim[0]/2 - j*pixelPerDegree, y-vhCompassSize);
-				this.c.lineTo(dim[0]/2 - j*pixelPerDegree, y);
+				this.c.moveTo(dim[0]/2 - j*this.pixelPerDegree, y-vhCompassSize);
+				this.c.lineTo(dim[0]/2 - j*this.pixelPerDegree, y);
 				this.c.stroke();
 			}
 			
 			// draw text
 			this.c.textAlign = "center";
 			this.c.fillText(((360-i)%360).toFixed(0).padStart(3, '0'), 
-				dim[0]/2 - j*pixelPerDegree, // x position
+				dim[0]/2 - j*this.pixelPerDegree, // x position
 				y -vhCompassSize - fontSize/2 +fontOffset, 3* fontSize // y position
 				);
 		}
@@ -124,14 +128,14 @@ const VirtualHorizon = class{
 		// draw top parallel
 		for(var i = 1; i<18; i++){
 			this.drawVirtualHorizon_Parallel(
-				dim[1]/2 - i*parallelDistance*pixelPerDegree, // y coordinate
+				dim[1]/2 - i*parallelDistance*this.pixelPerDegree, // y coordinate
 				this.centerSpace, this.paraLength);
 			
 			// draw text
 			this.c.textAlign = "left";
 			this.c.fillText(i*parallelDistance, 
 				dim[0]/2+this.paraLength+10, // x
-				dim[1]/2 - i*parallelDistance*pixelPerDegree + fontSize/2 -fontOffset, // y
+				dim[1]/2 - i*parallelDistance*this.pixelPerDegree + fontSize/2 -fontOffset, // y
 				3* fontSize); // width
 		}
 
@@ -139,14 +143,14 @@ const VirtualHorizon = class{
 		this.c.setLineDash([15,10]);
 		for(var i = 1; i<18; i++){
 			this.drawVirtualHorizon_Parallel(
-				dim[1]/2 + i*parallelDistance*pixelPerDegree, // y coordinate
+				dim[1]/2 + i*parallelDistance*this.pixelPerDegree, // y coordinate
 				this.centerSpace, this.paraLength);
 			
 			// draw Text
 			this.c.textAlign = "left";
 			this.c.fillText(i*parallelDistance, 
 				dim[0]/2+this.paraLength+10, // x
-				dim[1]/2 + i*parallelDistance*pixelPerDegree + fontSize/2 -fontOffset, // y
+				dim[1]/2 + i*parallelDistance*this.pixelPerDegree + fontSize/2 -fontOffset, // y
 				3* fontSize); // width
 		}
 		this.c.setLineDash([1,0]);

@@ -1,12 +1,11 @@
 // global variables
 var dim = [1920,1080];
 const colors = ["#e88300", "#006198","#e80000"];
-const lineWidth = 2.0;
-const fontSize = 25;
+var lineWidth = 2.0;
+var fontSize = 25;
 const fontOffset = 6;
-const font = fontSize + "px sans-serif";
-
-var pixelPerDegree = 20;
+var font = fontSize + "px sans-serif";
+var opacity = 1.0; // overlay opacity
 
 var b, c, vh; // for canvas elements
 
@@ -36,6 +35,9 @@ function onStart(){
 	features.virtualHorizon = new VirtualHorizon(vh);
 	features.compass = new Compass(c);
 	features.depth = new Depth(c);
+
+	// update Settings
+	updateSettings();
 
 	// setup resize function
 	window.addEventListener('resize', onResize);
@@ -90,18 +92,17 @@ function initializeAll(){
 	c.fillStyle = colors[0];
 	c.lineWidth = lineWidth;
 	c.font = font;
+	c.globalAlpha = opacity;
 
 	// setup vh canvas
 	vh.strokeStyle = colors[0];
 	vh.fillStyle = colors[0];
 	vh.lineWidth = lineWidth;
 	vh.font = font;
+	vh.globalAlpha = opacity;
 
 	// initialize all features
 	Object.values(features).map(obj => obj.initialize(dim));
-
-	// update Settings
-	updateSettings();
 
 	// render all
 	renderAll();
@@ -123,8 +124,19 @@ function renderAll(){
  * reads the settings and updates the variables
  */
 function updateSettings(){
+	// opacity
+	opacity = Math.pow(parseFloat(document.getElementById("ranOpa").value),1/2.2);
+	// font Size
+	fontSize = parseFloat(document.getElementById("ranFontSize").value);
+	font = fontSize + "px sans-serif";
+	// line Width
+	lineWidth = parseFloat(document.getElementById("ranLineWith").value)
+
 	features.depth.mode = document.getElementById("selDepthMode").value;
 	features.compass.mode = document.getElementById("selCompMode").value;
+
+	// update all
+	initializeAll();
 }
 
 
