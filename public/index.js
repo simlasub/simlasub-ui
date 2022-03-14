@@ -10,26 +10,16 @@ var pixelPerDegree = 20;
 
 var b, c, vh; // for canvas elements
 
-// status variables, maybe store in dictionary?
-/*var stat = {
+// status
+var stat = {
 	roll: 0, pitch:0, heading: 0,
 	xSpeed: 0, ySpeed: 0, zSpeed: 0, 
 	depth:0, vSpeed: 0,
 	armed: true,
 	battery: 10, maxBat: 14, minBat: 6, resBat: 8,
-	lastError: "NO ERROR"
-};*/
-var roll = pitch = heading = 0;
-var xSpeed = ySpeed = zSpeed = vSpeed = 0;
-var depth = 0;
-var mode = "disarmed";
-var armed = false;
-var battery = 10;
-var maxBattery = 14;
-var minBattery = 6;
-var resBattery = 8;
-var lastError = "NO ERROR";
-
+	lastError: "NO ERROR",
+	time: 0
+};
 var features = {};
 
 /**
@@ -118,7 +108,7 @@ function initializeAll(){
 }
 
 /**
- * renders all active features
+ * renders all features with stat variable
  */
 function renderAll(){
 	// clear all canvases
@@ -126,7 +116,7 @@ function renderAll(){
 	vh.clearRect(0, 0, dim[0], dim[1]);
 
 	// render all features
-	Object.values(features).map(obj => obj.render());
+	Object.values(features).map(obj => obj.render(stat));
 }
 
 /**

@@ -30,7 +30,7 @@ const Depth = class {
 	/**
 	 * renders the depth scale and vSpeed indicator
 	*/
-	render(){
+	render(stat){
 		const offset = [ this.vhOffset[0]+this.vhSize[0], this.vhOffset[1] ];
 		const depthScaleExtend = 8;
 		const vSpeedScaleExtend = 1;
@@ -57,7 +57,7 @@ const Depth = class {
 			this.depthSize[0], fontSize+4);
 		// draw text
 		this.c.textAlign = "right";
-		this.c.fillText(depth.toFixed(1), 
+		this.c.fillText(stat.depth.toFixed(1), 
 			offset[0]+this.depthSize[0]-5, 
 			offset[1] + this.depthSize[1]/2 + fontSize/2-fontOffset, this.depthSize[0]-5);
 		// draw rectangle around
@@ -79,14 +79,14 @@ const Depth = class {
 		const depthScale = this.depthSize[1] / depthScaleExtend;
 
 		// depth Lines ############################################################
-		var i = depth%1; // transpose by difference ie. 12.25m => 0.25m 
+		var i = stat.depth%1; // transpose by difference ie. 12.25m => 0.25m 
 		// loop over top lines
 		while(i*depthScale < this.depthSize[1]/2){
 			this.drawDepthIndicator(offset, depthScale, i);
 			i += 1;
 		}
 		// loop over bottom lines
-		var i = depth%1-1;
+		var i = stat.depth%1-1;
 		while(i*depthScale > -this.depthSize[1]/2){
 			this.drawDepthIndicator(offset, depthScale, i);
 			i = i-1;
@@ -112,7 +112,7 @@ const Depth = class {
 		}
 		// draw vSpeed Indicator
 		this.c.beginPath();
-		const y = clamp(vSpeed*vSpeedScale, -vSpeedScale*this.depthSize[1]/2, vSpeedScale*this.depthSize[1]/2);
+		const y = clamp(stat.vSpeed*vSpeedScale, -vSpeedScale*this.depthSize[1]/2, vSpeedScale*this.depthSize[1]/2);
 		this.c.moveTo(offset[0], offset[1] + this.depthSize[1]/2 + y);
 		this.c.lineTo(offset[0]-vSpeedIndicator, 
 			offset[1] + this.depthSize[1]/2 + y+vSpeedIndicator/1.2);
@@ -123,7 +123,7 @@ const Depth = class {
 		// draw vSpeed Text
 		if(this.mode<=1){
 			this.c.textAlign = "right";
-			this.c.fillText(vSpeed.toFixed(2), offset[0]+this.depthSize[0], offset[1] -6, this.depthSize[0]);
+			this.c.fillText(stat.vSpeed.toFixed(2), offset[0]+this.depthSize[0], offset[1] -6, this.depthSize[0]);
 		}	
 	}
 
@@ -137,7 +137,7 @@ const Depth = class {
 		// parameter
 		const depthScaleLength = 20;
 
-		if(depth-i > 0){ // recognise of surface
+		if(stat.depth-i > 0){ // recognise of surface
 			// draw line
 			this.c.beginPath();
 			this.c.moveTo(offset[0], offset[1] + this.depthSize[1]/2 - i*depthScale);
@@ -145,11 +145,11 @@ const Depth = class {
 			this.c.stroke();	
 			// draw text
 			this.c.textAlign = "left";
-			this.c.fillText((depth-i).toFixed(0), 
+			this.c.fillText((stat.depth-i).toFixed(0), 
 				offset[0]+depthScaleLength,  // x
 				offset[1] + this.depthSize[1]/2 - i*depthScale + fontSize/2-fontOffset,  // y
 				this.depthSize[0]-depthScaleLength); // width
-		} else if(depth-i == 0){
+		} else if(stat.depth-i == 0){
 			// rectangle for surface
 			this.c.rect(offset[0], 
 				offset[1] + this.depthSize[1]/2 - i*depthScale, 

@@ -30,7 +30,7 @@ const Compass = class {
 	/**
 	 * renders the compass needs canvas Context c
 	 */
-	render(){
+	render(stat){
 		if(this.mode<=1){
 			// draw circular frame #################################################
 			if(this.framed){
@@ -47,23 +47,23 @@ const Compass = class {
 			// draw North indicator ################################################
 			this.c.beginPath();
 			this.c.lineTo(
-				this.offset[0] - this.innerRad * Math.sin(degToRad(heading)), 
-				this.offset[1] - this.innerRad * Math.cos(degToRad(heading)));
+				this.offset[0] - this.innerRad * Math.sin(degToRad(stat.heading)), 
+				this.offset[1] - this.innerRad * Math.cos(degToRad(stat.heading)));
 			this.c.lineTo(
-				this.offset[0] - this.centerSize * Math.sin(degToRad(heading+90)), 
-				this.offset[1] - this.centerSize * Math.cos(degToRad(heading+90)));
+				this.offset[0] - this.centerSize * Math.sin(degToRad(stat.heading+90)), 
+				this.offset[1] - this.centerSize * Math.cos(degToRad(stat.heading+90)));
 			this.c.lineTo(
-				this.offset[0] - this.centerSize * Math.sin(degToRad(heading-90)), 
-				this.offset[1] - this.centerSize * Math.cos(degToRad(heading-90)));
+				this.offset[0] - this.centerSize * Math.sin(degToRad(stat.heading-90)), 
+				this.offset[1] - this.centerSize * Math.cos(degToRad(stat.heading-90)));
 			this.c.lineTo(
-				this.offset[0] - this.innerRad * Math.sin(degToRad(heading)), 
-				this.offset[1] - this.innerRad * Math.cos(degToRad(heading)));
+				this.offset[0] - this.innerRad * Math.sin(degToRad(stat.heading)), 
+				this.offset[1] - this.innerRad * Math.cos(degToRad(stat.heading)));
 			this.c.fill();
 
 			// draw indicators #####################################################
 			for(let i = 0; i < 360; i+=10) {
-				// rotate by heading
-				let j = i + heading;
+				// rotate by stat.heading
+				let j = i + stat.heading;
 
 				if(i%90==0){ // For North, East, South, West
 					// draw line
@@ -98,16 +98,16 @@ const Compass = class {
 			this.c.lineTo(this.offset[0], this.offset[1]-this.radius);
 			this.c.fill();
 
-			// heading text ########################################################
+			// stat.heading text ########################################################
 			this.c.textAlign = "left";
-			this.c.fillText(heading.toFixed(0).padStart(3, '0'), 
+			this.c.fillText(stat.heading.toFixed(0).padStart(3, '0'), 
 				this.offset[0] + this.radius + 5, 
 				this.offset[1]);
 		}
 		else if(this.mode==2){
-			// heading text ########################################################
+			// stat.heading text ########################################################
 			this.c.textAlign = "center";
-			this.c.fillText(heading.toFixed(0).padStart(3, '0'), 
+			this.c.fillText(stat.heading.toFixed(0).padStart(3, '0'), 
 				this.offset[0], 
 				this.offset[1]);
 		}

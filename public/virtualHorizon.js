@@ -35,7 +35,7 @@ const VirtualHorizon = class{
 	/**
 	 * renders the virtual horizon, the paralles and the horizon compass
 	 */
-	render(){
+	render(stat){
 		// set parameters
 		const parallelDistance = 10; // in degrees
 		const clip = true;
@@ -76,10 +76,10 @@ const VirtualHorizon = class{
 		if(!vhDebug){
 			// roll transform
 			this.c.translate(dim[0]/2,dim[1]/2);
-			this.c.rotate(degToRad(roll));
+			this.c.rotate(degToRad(stat.roll));
 			this.c.translate(-dim[0]/2,-dim[1]/2);
 			// pitch transform
-			this.c.translate(0,pitch*pixelPerDegree);
+			this.c.translate(0,stat.pitch*pixelPerDegree);
 		}
 
 		// draw horizon ###########################################################
@@ -96,7 +96,7 @@ const VirtualHorizon = class{
 		// draw compass ###########################################################
 		for(let i = -360; i < 360; i+=10) {
 			// translate by heading
-			let j = i + heading;
+			let j = i + stat.heading;
 
 			// draw ticks
 			if(i%90==0){ // north, east, south and west
