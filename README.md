@@ -8,10 +8,11 @@ Features to implement:
 - [x] virtual Horizon
 - [x] depth indicator
 - [x] compass
-- [ ] speed indicator
-- [ ] movement vector
+- [x] speed indicator
+- [x] movement vector
 - [ ] text stuff
-- [ ] communication stack
+- [ ] video stream
+- [ ] steering data
 
 Concept Art:
 ![Image of Heads-Up dislay](example.png)

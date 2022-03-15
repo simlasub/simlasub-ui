@@ -9,8 +9,8 @@ var app = express();
 var wss = new WebSocket.Server({port: 1234});
 
 // setup webserver
-app.use(express.static(__dirname + "/public"));
-console.log("public folder set to: " + __dirname + "/public");
+app.use(express.static(__dirname + "/../public"));
+console.log("public folder set to: " + __dirname + "/../public");
 app.listen(8080, ()=>{
 	console.log("webserver started on http://localhost:8080");
 });

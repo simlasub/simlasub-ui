@@ -24,7 +24,7 @@ const Speed = class {
 	// initializes the depth gauge
 	initialize(dim){
 		this.topDownSpeedScale = 2.0*features.virtualHorizon.center;
-		this.speedVecSize = features.virtualHorizon.center;
+		this.speedVecSize = features.virtualHorizon.center * 0.7;
 		this.size = features.depth.size;
 		this.offset = [ 
 			features.virtualHorizon.offset[0]-this.size[0],
