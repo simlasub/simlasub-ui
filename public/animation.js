@@ -38,6 +38,11 @@ function renderAnimation(){
 	stat.depth = 5 + 0.05*Math.cos(time) - 5*Math.cos(time * 0.08);
 	stat.vSpeed = - 0.05*Math.sin(time) + 0.08*5*Math.sin(time * 0.08);
 
+	// Speed is linked with attitude and vSpeed but i don't care
+	stat.zSpeed = - 0.04*Math.sin(time) + 0.08*5*Math.sin(time * 0.08);
+	stat.xSpeed = 1 + 1.2*Math.cos(time*0.1) + 0.08*5*Math.sin(time * 0.5);
+	stat.ySpeed = 0.5*Math.sin(time) + 0.08*5*Math.sin(time * 0.1);
+
 	// render all
 	// and optionally log the evaluation time
 	//console.time("rendering");

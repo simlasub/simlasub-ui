@@ -13,7 +13,7 @@ var b, c, vh; // for canvas elements
 // status
 var stat = {
 	roll: 0, pitch:0, heading: 0, turnSpeed: 0,
-	xSpeed: 1.0, ySpeed: 0.2, zSpeed: 0.3, 
+	xSpeed: 5.0, ySpeed: 0.2, zSpeed: 0.3, 
 	depth:0, vSpeed: 0,
 	armed: true,
 	battery: 10, maxBat: 14, minBat: 6, resBat: 8,
@@ -36,6 +36,7 @@ function onStart(){
 	features.virtualHorizon = new VirtualHorizon(vh);
 	features.compass = new Compass(c);
 	features.depth = new Depth(c);
+	features.speed = new Speed(c);
 
 	// update Settings
 	updateSettings();
@@ -140,10 +141,10 @@ function updateSettings(){
 
 	// color
 	colors[0] = document.getElementById("colMain").value;
-
 	// feature Settings
 	features.depth.mode = document.getElementById("selDepthMode").value;
 	features.compass.mode = document.getElementById("selCompMode").value;
+	features.speed.mode = document.getElementById("selSpeedMode").value;
 	features.virtualHorizon.clip = document.getElementById("chkVhClip").checked;
 	features.virtualHorizon.compass = document.getElementById("chkVhComp").checked;
 	// update all

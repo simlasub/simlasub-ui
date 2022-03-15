@@ -15,6 +15,7 @@
 	<script src="animation.js"></script>
 	<script src="depth.js"></script>
 	<script src="compass.js"></script>
+	<script src="speed.js"></script>
 	<!-- and stylesheet -->
 	<link rel="stylesheet" href="style.css">
 </header>
@@ -58,6 +59,12 @@
 					<option value="1">Full</option>
 					<option value="2">Simplified</option>
 					<option value="3">Number</option>
+				</select>
+
+				<label for="selSpeedMode">Speed Mode: </label>
+				<select id="selSpeedMode" onchange="updateSettings()">
+					<option value="1">Detailed</option>
+					<option value="2">Number</option>
 				</select>
 
 				<label for="selCompMode" for="chkVhClip">VH clipping: </label>

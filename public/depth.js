@@ -7,7 +7,6 @@ const Depth = class {
 	size;
 	mode = 0;
 	vhSize;
-	vhOffset;
 	offset;
 	depthScaleExtend = 8;
 	vSpeedScaleExtend = 1;
@@ -30,7 +29,10 @@ const Depth = class {
 
 		// update Size and offset
 		this.size = [80*pixelRatio, 0.8 * dim[1]];
-		this.offset = [ this.vhOffset[0]+this.vhSize[0], this.vhOffset[1] ];
+		this.offset = [ 
+			features.virtualHorizon.offset[0]+this.vhSize[0],
+			features.virtualHorizon.offset[1] 
+		];
 	}
 
 	/**
