@@ -1,7 +1,7 @@
 // global variables
 var colors = ["#e88300", "#006198","#e80000"];
 const pixelRatio = window.devicePixelRatio || 1; // get screen scale factor (or 1 if unavailable)
-var lineWidth = 2.0 * pixelRatio;
+var lineWidth = 1.0 * pixelRatio;
 var fontSize = 25 * pixelRatio;
 const fontOffset = 6 * pixelRatio;
 var font;
@@ -13,7 +13,7 @@ var b, c, vh; // for canvas elements
 // status
 var stat = {
 	roll: 0, pitch:0, heading: 0, turnSpeed: 0,
-	xSpeed: 0, ySpeed: 0, zSpeed: 0, 
+	xSpeed: 1.0, ySpeed: 0.2, zSpeed: 0.3, 
 	depth:0, vSpeed: 0,
 	armed: true,
 	battery: 10, maxBat: 14, minBat: 6, resBat: 8,
@@ -42,9 +42,10 @@ function onStart(){
 
 	// setup resize function
 	window.addEventListener("resize", onResize);
-	document.getElementById("canvas-container").addEventListener('resize', onResize);
-	onResize();
+	document.getElementById("canvas-container").addEventListener("resize", onResize);
+	document.getElementById("box-canvas").addEventListener("resize", onResize);
 	document.addEventListener("fullscreenchange",onResize);
+	onResize();
 
 	// setup fullscreen
 	document.addEventListener("keydown", function(e) {
@@ -60,7 +61,9 @@ function onStart(){
 	startAnimation();
 }
 
-// called on a window resize
+/**
+ * called on canvas resize (often multiple times)
+ */
 function onResize(){
 	// get resolution off container
 	const container = document.getElementById("canvas-container");

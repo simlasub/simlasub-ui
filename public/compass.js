@@ -90,7 +90,7 @@ const Compass = class {
 			this.c.fill();
 
 			
-			if(this.mode <=1){
+			if(this.mode <=2){
 				// draw radial text ####################################################
 				this.c.textAlign = "center";
 				for(let i = 0; i < 360; i+=30){
@@ -98,7 +98,7 @@ const Compass = class {
 					let j = 360 - i + stat.heading;
 
 					// find correct text
-					let text;
+					let text = "";
 					switch(i) {
 						case 0:
 							text = "N"	
@@ -114,7 +114,9 @@ const Compass = class {
 							break;
 					
 						default:
-							text = (i/10).toFixed(0);
+							if(this.mode<=1){
+								text = (i/10).toFixed(0);
+							}
 							break;
 					}
 
@@ -125,17 +127,6 @@ const Compass = class {
 						this.offset[1] - this.textRad * Math.cos(degToRad(j)) + fontSize/2 - fontOffset
 					);
 				}
-			}
-			else{
-				// draw line from center to identify north
-				this.c.beginPath();
-				this.c.moveTo(
-					this.offset[0] - this.radius*0.3 * Math.sin(degToRad(stat.heading)), 
-					this.offset[1] - this.radius*0.3 * Math.cos(degToRad(stat.heading)));
-				this.c.lineTo(
-					this.offset[0] - this.radius*0.8 * Math.sin(degToRad(stat.heading)), 
-					this.offset[1] - this.radius*0.8 * Math.cos(degToRad(stat.heading)));
-				this.c.stroke();
 			}
 
 			// heading text ########################################################
