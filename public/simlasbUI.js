@@ -7,6 +7,7 @@ const fontOffset = 6 * pixelRatio;
 var font;
 var dim = [1920 * pixelRatio, 1080 * pixelRatio];
 var opacity = 1.0; // overlay opacity
+var lastOpacity = opacity;
 
 var b, c, vh; // for canvas elements
 
@@ -54,6 +55,20 @@ function onStart(){
 		  toggleFullScreen();
 		}
 	  }, true);
+
+	// setup d to deactivate overlay
+	document.addEventListener("keydown", function(e) {
+		if (e.key === "d") {
+			if(document.getElementById("ranOpa").value == 0){
+				document.getElementById("ranOpa").value = lastOpacity;
+			} else{
+				lastOpacity = document.getElementById("ranOpa").value;
+				document.getElementById("ranOpa").value = 0;
+			}
+			updateSettings();			
+		}
+	  }, true);
+
 
 	// render all
 	initializeAll();
@@ -145,6 +160,8 @@ function updateSettings(){
 	features.depth.mode = document.getElementById("selDepthMode").value;
 	features.compass.mode = document.getElementById("selCompMode").value;
 	features.speed.mode = document.getElementById("selSpeedMode").value;
+	features.speed.vecEn = document.getElementById("chkSpeedVecEn").checked;
+	features.virtualHorizon.enable = document.getElementById("chkVhEn").checked;
 	features.virtualHorizon.clip = document.getElementById("chkVhClip").checked;
 	features.virtualHorizon.compass = document.getElementById("chkVhComp").checked;
 	// update all

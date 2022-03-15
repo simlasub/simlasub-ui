@@ -12,6 +12,7 @@ const Speed = class {
 	size;
 	offset;
 	mode = 1;
+	vecEn = true;
 
 	/**
 	 * 
@@ -42,7 +43,7 @@ const Speed = class {
 		var speed = Math.sqrt(Math.pow(stat.xSpeed,2)+Math.pow(stat.ySpeed,2)+Math.pow(stat.zSpeed,2));
 
 		// draw Top Down Speed vector ###############################################
-		if(	speed<= this.topDownMaxSpeed &&	stat.zSpeed<= this.topDownMaxZSpeed){
+		if(	speed<= this.topDownMaxSpeed &&	stat.zSpeed<= this.topDownMaxZSpeed && this.vecEn){
 			this.c.beginPath();
 			this.c.arc(
 				dim[0]/2 + stat.ySpeed * this.topDownSpeedScale,
@@ -59,7 +60,7 @@ const Speed = class {
 		}
 
 		// draw Speed vector ##########################################################
-		if(speed >= this.vectMinSpeed){
+		if(speed >= this.vectMinSpeed && this.vecEn){
 			// calculate x and y speed
 			let y = this.pixelPerDegree * radToDeg(Math.asin(stat.zSpeed/speed));
 			let x = this.pixelPerDegree * radToDeg(Math.atan2(stat.ySpeed, stat.xSpeed));

@@ -13,6 +13,7 @@ const VirtualHorizon = class{
 	compSize = 10*pixelRatio;
 	transform = true; // disables the transformation
 	compass = true;
+	enable = true;
 
 	/**
 	 * 
@@ -49,6 +50,9 @@ const VirtualHorizon = class{
 		this.c.setTransform(1, 0, 0, 1, 0, 0);
 		this.c.clearRect(0, 0, dim[0], dim[1]);
 		this.c.beginPath();
+
+		// check if enabled
+		if(!this.enable){return;}
 
 		// Clip a rectangular area for virtual horizon ############################
 		if(this.clip){
