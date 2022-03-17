@@ -35,7 +35,7 @@ const VirtualHorizon = class{
 		// update variables with new screen dimensions
 		this.size = [dim[0]*0.7 - 160*pixelRatio,dim[1] * 0.6];
 		this.offset = [dim[0]/2-this.size[0]/2, dim[1]/2-this.size[1]/2 - dim[1]*0.1];
-		this.paraLength = 0.1*(this.size[0]-fontSize*3);
+		this.paraLength = 0.15*(this.size[0]-fontSize*3);
 		this.center = 0.75 * this.paraLength;
 
 		// get ppD
@@ -162,7 +162,7 @@ const VirtualHorizon = class{
 		let y = dim[1]/2 - i*this.pixelPerDegree;
 		let length;
 
-		if(i%10 == 0){
+		if(i%20 == 0){
 			// draw text
 			this.c.textAlign = "left";
 			this.c.fillText(i, 
@@ -171,13 +171,13 @@ const VirtualHorizon = class{
 				3* fontSize); // width
 			// set length
 			length = this.paraLength;
-		} else if(i%5 == 0){
+		} else if(i%10 == 0){
 			// set length
-			length = this.paraLength * 0.75;
+			length = this.paraLength * 1.0;
 		}
-		else if(i%2.5 == 0){
+		else if(i%5 == 0){
 			// set length
-			length = this.center*0.5;
+			length = this.paraLength * 0.2;
 		}
 
 		this.c.beginPath();
