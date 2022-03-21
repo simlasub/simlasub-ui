@@ -95,7 +95,7 @@ tr:hover {background-color: #ddd;}
 
 /* CSS for the canvases #######################################################*/
 
-canvas{
+canvas, video{
 	position: absolute;
 	width: 100%;
 	height: 100%;

@@ -1,7 +1,7 @@
 // global variables
 var colors = ["#e88300", "#006198","#e80000"];
 const pixelRatio = window.devicePixelRatio || 1; // get screen scale factor (or 1 if unavailable)
-var lineWidth = 1.0 * pixelRatio;
+var lineWidth = 1. * pixelRatio;
 var fontSize = 25 * pixelRatio;
 const fontOffset = 6 * pixelRatio;
 var font;
@@ -35,9 +35,9 @@ function onStart(){
 	// initialize features
 	features.background = new Background(b);
 	features.virtualHorizon = new VirtualHorizon(vh);
+	features.speed = new Speed(c);
 	features.compass = new Compass(c);
 	features.depth = new Depth(c);
-	features.speed = new Speed(c);
 
 	// update Settings
 	updateSettings();
@@ -124,6 +124,7 @@ function initializeAll(){
 	vh.globalAlpha = opacity;
 
 	// initialize all features
+	features.virtualHorizon.initialize(dim); // other features reference the vH
 	Object.values(features).map(obj => obj.initialize(dim));
 
 	// render all
@@ -160,7 +161,7 @@ function updateSettings(){
 	features.depth.mode = document.getElementById("selDepthMode").value;
 	features.compass.mode = document.getElementById("selCompMode").value;
 	features.speed.mode = document.getElementById("selSpeedMode").value;
-	features.speed.vecEn = document.getElementById("chkSpeedVecEn").checked;
+	
 	features.virtualHorizon.enable = document.getElementById("chkVhEn").checked;
 	features.virtualHorizon.clip = document.getElementById("chkVhClip").checked;
 	features.virtualHorizon.compass = document.getElementById("chkVhComp").checked;

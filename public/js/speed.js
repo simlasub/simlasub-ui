@@ -12,7 +12,6 @@ const Speed = class {
 	size;
 	offset;
 	mode = 1;
-	vecEn = true;
 
 	/**
 	 * 
@@ -26,10 +25,12 @@ const Speed = class {
 	initialize(dim){
 		this.topDownSpeedScale = 2.0*features.virtualHorizon.center;
 		this.speedVecSize = features.virtualHorizon.center * 0.7;
-		this.size = features.depth.size;
+		this.size = [
+			80*pixelRatio, features.virtualHorizon.size[1]
+		];
 		this.offset = [ 
 			features.virtualHorizon.offset[0]-this.size[0],
-			features.virtualHorizon.offset[1] 
+			2*features.virtualHorizon.offset[1]
 		];
 
 		// get ppD
@@ -40,10 +41,14 @@ const Speed = class {
 	 * renders the depth scale and vSpeed indicator
 	*/
 	render(stat){
+
+		// dont render if mode == 3
+		if(this.mode == 3){return;}
+
 		var speed = Math.sqrt(Math.pow(stat.xSpeed,2)+Math.pow(stat.ySpeed,2)+Math.pow(stat.zSpeed,2));
 
 		// draw Top Down Speed vector ###############################################
-		if(	speed<= this.topDownMaxSpeed &&	stat.zSpeed<= this.topDownMaxZSpeed && this.vecEn){
+		if(	speed<= this.topDownMaxSpeed &&	stat.zSpeed<= this.topDownMaxZSpeed){
 			this.c.beginPath();
 			this.c.arc(
 				dim[0]/2 + stat.ySpeed * this.topDownSpeedScale,
@@ -60,7 +65,7 @@ const Speed = class {
 		}
 
 		// draw Speed vector ##########################################################
-		if(speed >= this.vectMinSpeed && this.vecEn){
+		if(speed >= this.vectMinSpeed){
 			// calculate x and y speed
 			let y = this.pixelPerDegree * radToDeg(Math.asin(stat.zSpeed/speed));
 			let x = this.pixelPerDegree * radToDeg(Math.atan2(stat.ySpeed, stat.xSpeed));

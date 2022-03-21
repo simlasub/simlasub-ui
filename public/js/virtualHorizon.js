@@ -177,7 +177,7 @@ const VirtualHorizon = class{
 		}
 		else if(i%5 == 0){
 			// set length
-			length = this.paraLength * 0.2;
+			length = 0;
 		}
 
 		this.c.beginPath();
