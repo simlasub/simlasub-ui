@@ -15,4 +15,4 @@ Features to implement:
 - [ ] steering data
 
 Concept Art:
-![Image of Heads-Up dislay](example.png)
+![Image of Heads-Up dislay](doc/example.png)
