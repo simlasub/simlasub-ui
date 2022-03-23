@@ -6,26 +6,31 @@
 	<title>SIMLASUB</title>
 	<meta name="viewport" content="width=device-width">
 
-	<script type="text/javascript" src="jmuxer.js"></script>
+	<script type="text/javascript" src="broadway/Player/Decoder.js"></script>
+    <script type="text/javascript" src="broadway/Player/YUVCanvas.js"></script>
+    <script type="text/javascript" src="broadway/Player/Player.js"></script>
+    <script type="text/javascript" src="broadway/Player/stream.js"></script>
+    <script type="text/javascript" src="broadway/Player/mp4.js"></script>
 
 	<!-- load stylesheet -->
 	<link rel="stylesheet" href="style.css">
 </header>
 
 <body class="flex">
-	<div class="box">
-		<video id="player"></video>	
+	<div class="box" id="stream">
 	</div>
 </body>
 
 
 <script>
-	var jmuxer = new JMuxer({
-		node: "player",
-		mode: "video", /* available values are: both, audio and video */
-		debug: true,
-		fps: 30
+	var player = new Player({
+		webgl: false,
+		useWorker: false,
+		workerFile: 'broadway/Player/Decoder.js'
 	});
+
+	player.canvas.id="stream";
+	document.getElementById("stream").append(player.canvas);
 
 	ws = new WebSocket("ws://" + location.hostname + ":1234");
 	ws.binaryType = "arraybuffer";
@@ -40,25 +45,7 @@
 
 		console.log(data);
 
-		jmuxer.feed(parse(data));
-	}
-
-	function parse(input) {
-		var dv = new DataView(input.buffer),
-			duration,
-			audioLength,
-			audio,
-			video;
-
-		duration = dv.getUint16(0, true);
-		audioLength = dv.getUint16(2, true);
-		audio = input.subarray(4, (audioLength + 4));
-		video = input.subarray(audioLength + 4);
-
-		return {
-			video: video,
-			duration: duration
-		};
+		player.decode(data);
 	}
 	</script>
 

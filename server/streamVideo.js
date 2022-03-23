@@ -34,8 +34,8 @@ function startStream(){
 	 * ffmpeg -i example.mp4 -vcodec libx264 -profile:v baseline -b:v 2M -pass 1 -bf 0  -g 30 -keyint_min 60 -bsf:v h264_mp4toannexb example.h264
 	 * ffmpeg -i example.mp4 -vcodec libx264 -b:v 2M -pass 1 -bf 0 -g 30 -keyint_min 30 example.h264
 	 */
-	const stream = fs.createReadStream("example.h264",{highWaterMark:70000000}).pipe(
-		new Throttle({rate: 50000})
+	const stream = fs.createReadStream(__dirname + "/../exampleData/example.h264",{highWaterMark:70000000}).pipe(
+		new Throttle({rate: 780000})
 	).pipe(
 		new Splitter(NAL_SEPERATOR)
 	);
