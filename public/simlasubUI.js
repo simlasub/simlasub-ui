@@ -56,9 +56,9 @@ function onStart(){
 		}
 	  }, true);
 
-	// setup d to deactivate overlay
+	// setup s to deactivate symbology
 	document.addEventListener("keydown", function(e) {
-		if (e.key === "d") {
+		if (e.key === "s") {
 			if(document.getElementById("ranOpa").value == 0){
 				document.getElementById("ranOpa").value = lastOpacity;
 			} else{
