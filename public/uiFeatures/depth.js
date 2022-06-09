@@ -56,18 +56,18 @@ const Depth = class {
 		// draw depth number ######################################################
 		// clear under text
 		this.c.clearRect(this.offset[0], 
-			this.offset[1] + this.size[1]/2 - fontSize/2-4, 
-			this.size[0], fontSize+4);
+			this.offset[1] + this.size[1]/2 - settings.fontSize/2-4, 
+			this.size[0], settings.fontSize+4);
 		// draw text
 		this.c.textAlign = "right";
 		this.c.fillText(stat.depth.toFixed(1), 
 			this.offset[0]+this.size[0]-5, 
-			this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset, this.size[0]-5);
+			this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset, this.size[0]-5);
 		// draw rectangle around
 		if(this.mode < 3){
 			this.c.rect(this.offset[0], 
-				this.offset[1] + this.size[1]/2 - fontSize/2-4, 
-				this.size[0], fontSize + 4);
+				this.offset[1] + this.size[1]/2 - settings.fontSize/2-4, 
+				this.size[0], settings.fontSize + 4);
 			this.c.stroke();
 		}
 
@@ -146,7 +146,7 @@ const Depth = class {
 			this.c.textAlign = "left";
 			this.c.fillText((stat.depth-i).toFixed(0), 
 				this.offset[0]+depthScaleLength,  // x
-				this.offset[1] + this.size[1]/2 - i*depthScale + fontSize/2-fontOffset,  // y
+				this.offset[1] + this.size[1]/2 - i*depthScale + settings.fontSize/2-settings.fontOffset,  // y
 				this.size[0]-depthScaleLength); // width
 		} else if(stat.depth-i == 0){
 			// rectangle for surface

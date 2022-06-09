@@ -1,17 +1,10 @@
 // global variables
-var colors = ["#e88300", "#006198","#e80000"];
 const pixelRatio = window.devicePixelRatio || 1; // get screen scale factor (or 1 if unavailable)
-var lineWidth = 1. * pixelRatio;
-var fontSize = 25 * pixelRatio;
-const fontOffset = 6 * pixelRatio;
-var font;
 var dim = [1920 * pixelRatio, 1080 * pixelRatio];
-var opacity = 1.0; // overlay opacity
-var lastOpacity = opacity;
 
 var b, c, vh; // for canvas elements
 
-// status
+// object for status
 var stat = {
 	roll: 0, pitch:0, heading: 0, turnSpeed: 0,
 	xSpeed: 5.0, ySpeed: 0.2, zSpeed: 0.3, 
@@ -21,7 +14,26 @@ var stat = {
 	lastError: "NO ERROR",
 	time: 0
 };
+// object to store all global Settings
+var settings = {
+	opacity: 1.0,
+	fontSize: 25 * pixelRatio,
+	lineWidth: 1. * pixelRatio,
+	colors: ["#e88300", "#006198","#e80000"],
+	font: "px sans-serif",
+	fontOffset: 6*pixelRatio,
+	depth:{	mode: 1 },
+	compass:{ mode: 2 },
+	speed:{	mode: 2 },
+	virtualHorizon:{
+		enable: true,
+		compass: true
+	}
+}
+// array of all active features
 var features = {};
+// save variables for toggle functions
+var lastOpacity;
 
 /**
  * this function is called after everything is loaded
@@ -40,7 +52,8 @@ function onStart(){
 	features.depth = new Depth(c);
 
 	// update Settings
-	updateSettings();
+	writeSettingsHTML();
+	applySettings();
 
 	// setup resize function
 	window.addEventListener("resize", onResize);
@@ -61,14 +74,15 @@ function onStart(){
 		if (e.key === "s") {
 			if(document.getElementById("ranOpa").value == 0){
 				document.getElementById("ranOpa").value = lastOpacity;
+				settings.opacity = lastOpacity;
 			} else{
-				lastOpacity = document.getElementById("ranOpa").value;
-				document.getElementById("ranOpa").value = 0;
+				lastOpacity = settings.opacity;
+				settings.opacity = 0;
 			}
-			updateSettings();			
+			writeSettingsHTML();
+			applySettings();			
 		}
 	  }, true);
-
 
 	// render all
 	initializeAll();
@@ -109,19 +123,7 @@ function onResize(){
  * initializes all active features and clears the canvases
  */
 function initializeAll(){
-	// setup canvas
-	c.strokeStyle = colors[0];
-	c.fillStyle = colors[0];
-	c.lineWidth = lineWidth;
-	c.font = font;
-	c.globalAlpha = opacity;
-
-	// setup vh canvas
-	vh.strokeStyle = colors[0];
-	vh.fillStyle = colors[0];
-	vh.lineWidth = lineWidth;
-	vh.font = font;
-	vh.globalAlpha = opacity;
+	readSettingsHTML();
 
 	// initialize all features
 	features.virtualHorizon.initialize(dim); // other features reference the vH
@@ -144,31 +146,77 @@ function renderAll(){
 }
 
 /**
- * reads the settings and updates the variables
+ * apply settings from the settings object to the features
  */
-function updateSettings(){
-	// opacity
-	opacity = Math.pow(parseFloat(document.getElementById("ranOpa").value),1/2.2);
-	// font Size
-	fontSize = parseFloat(document.getElementById("ranFontSize").value) * pixelRatio;
-	font = fontSize + "px sans-serif";
-	// line Width
-	lineWidth = parseFloat(document.getElementById("ranLineWith").value) * pixelRatio;
+function applySettings(){
+	// canvas settings
+	c.strokeStyle = settings.colors[0];
+	c.fillStyle = settings.colors[0];
+	c.font = settings.fontSize + settings.font;
+	c.globalAlpha = settings.opacity;
+	// virtual horizon canvas Settings
+	vh.strokeStyle = settings.colors[0];
+	vh.fillStyle = settings.colors[0];
+	vh.font = settings.fontSize + settings.font;
+	vh.globalAlpha = settings.opacity;
 
-	// color
-	colors[0] = document.getElementById("colMain").value;
-	// feature Settings
-	features.depth.mode = document.getElementById("selDepthMode").value;
-	features.compass.mode = document.getElementById("selCompMode").value;
-	features.speed.mode = document.getElementById("selSpeedMode").value;
-	
-	features.virtualHorizon.enable = document.getElementById("chkVhEn").checked;
-	features.virtualHorizon.clip = document.getElementById("chkVhClip").checked;
-	features.virtualHorizon.compass = document.getElementById("chkVhComp").checked;
-	// update all
-	onResize();
+	// assign settings
+	Object.assign(features.background, settings.background);
+	Object.assign(features.virtualHorizon, settings.virtualHorizon);
+	Object.assign(features.speed, settings.speed);
+	Object.assign(features.compass, settings.compass);
+	Object.assign(features.depth, settings.depth);
+
+	// re-initialize all features
+	Object.values(features).map(obj => obj.initialize(dim));
 }
 
+/**
+ * reads the settings from the HTML and updates the settings object
+ */
+function readSettingsHTML(){
+	// opacity
+	settings.opacity = Math.pow(parseFloat(document.getElementById("ranOpa").value),1/2.2);
+	// font Size
+	settings.fontSize = parseFloat(document.getElementById("ranFontSize").value) * pixelRatio;
+	// line Width
+	settings.lineWidth = parseFloat(document.getElementById("ranLineWith").value) * pixelRatio;
+
+	// color
+	settings.colors[0] = document.getElementById("colMain").value;
+	// feature Settings
+	settings.depth.mode = document.getElementById("selDepthMode").value;
+	settings.compass.mode = document.getElementById("selCompMode").value;
+	settings.speed.mode = document.getElementById("selSpeedMode").value;
+	
+	settings.virtualHorizon.enable = document.getElementById("chkVhEn").checked;
+	settings.virtualHorizon.compass = document.getElementById("chkVhComp").checked;
+
+	// apply the changes
+	applySettings();
+}
+
+/**
+ * write settings from the object to the HTML
+ */
+function writeSettingsHTML(){
+	// opacity
+	document.getElementById("ranOpa").value = Math.pow(settings.opacity,2.2);
+	// font Size
+	document.getElementById("ranFontSize").value = settings.fontSize / pixelRatio;
+	// line Width
+	document.getElementById("ranLineWith").value = settings.lineWidth / pixelRatio;
+
+	// color
+	document.getElementById("colMain").value = settings.colors[0];
+	// feature Settings
+	document.getElementById("selDepthMode").value = settings.depth.mode;
+	document.getElementById("selCompMode").value = settings.compass.mode;
+	document.getElementById("selSpeedMode").value = settings.speed.mode;
+	
+	document.getElementById("chkVhEn").checked = settings.virtualHorizon.enable;
+	document.getElementById("chkVhComp").checked = settings.virtualHorizon.compass;
+}
 
 /**
  * toggles the fullscreen view of the canvas-container

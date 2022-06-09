@@ -19,23 +19,19 @@ const VirtualHorizon = class{
 	 * 
 	 * @param {canvas context} can 
 	 */
-		constructor(can){
+	constructor(can){
 		this.c = can;
+		this.c.save();
 	}
 
 	/**
 	 * initializes the virtual horizon needs canvas Context vh
 	 */
 	initialize(dim){
-		// clear canvas
-		this.c.strokeStyle = colors[0];
-		this.c.fillStyle = colors[0];
-		this.c.lineWidth = lineWidth;
-
 		// update variables with new screen dimensions
 		this.size = [dim[0]*0.7 - 160*pixelRatio,dim[1] * 0.6];
 		this.offset = [dim[0]/2-this.size[0]/2, dim[1]/2-this.size[1]/2 - dim[1]*0.1];
-		this.paraLength = 0.15*(this.size[0]-fontSize*3);
+		this.paraLength = 0.15*(this.size[0]-settings.fontSize*3);
 		this.center = 0.75 * this.paraLength;
 
 		// get ppD
@@ -64,7 +60,6 @@ const VirtualHorizon = class{
 
 		// draw Center indicator ##################################################
 		// airplane style 
-		this.c.lineWidth = 1.0*lineWidth;
 		// left
 		this.c.beginPath();
 		this.c.moveTo(dim[0]/2-this.center,dim[1]/2);
@@ -80,7 +75,6 @@ const VirtualHorizon = class{
 		this.c.moveTo(dim[0]/2,dim[1]/2-this.center/5);
 		this.c.lineTo(dim[0]/2,dim[1]/2-this.center*0.5);
 		this.c.stroke();
-		this.c.lineWidth = lineWidth;
 		// center dot
 		this.c.beginPath();
 		this.c.arc(dim[0]/2,dim[1]/2, 3*pixelRatio, 0, 2 * Math.PI, true);
@@ -134,7 +128,7 @@ const VirtualHorizon = class{
 					this.c.textAlign = "center";
 					this.c.fillText(((360-i)%360).toFixed(0)/*.padStart(3, '0')*/, 
 						dim[0]/2 - j*this.pixelPerDegree, // x position
-						y -this.compSize - fontSize/2 +fontOffset, 3* fontSize // y position
+						y -this.compSize - settings.fontSize/2 +settings.fontOffset, 3* settings.fontSize // y position
 						);
 				}
 			}
@@ -167,8 +161,8 @@ const VirtualHorizon = class{
 			this.c.textAlign = "left";
 			this.c.fillText(i, 
 				dim[0]/2+this.paraLength+10, // x
-				dim[1]/2 - i*this.pixelPerDegree + fontSize/2 -fontOffset, // y
-				3* fontSize); // width
+				dim[1]/2 - i*this.pixelPerDegree + settings.fontSize/2 -settings.fontOffset, // y
+				3* settings.fontSize); // width
 			// set length
 			length = this.paraLength;
 		} else if(i%10 == 0){

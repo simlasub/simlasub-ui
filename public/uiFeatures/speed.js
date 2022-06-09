@@ -109,20 +109,20 @@ const Speed = class {
 		// draw speed number ######################################################
 		// clear under text
 		this.c.clearRect(this.offset[0], 
-			this.offset[1] + this.size[1]/2 - fontSize/2-4, 
-			this.size[0], fontSize+4);
+			this.offset[1] + this.size[1]/2 - settings.fontSize/2-4, 
+			this.size[0], settings.fontSize+4);
 		// draw text
 		this.c.textAlign = "right";
 		this.c.fillText(speed.toFixed(1), 
 			this.offset[0]+this.size[0]-5, 
-			this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset,
+			this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset,
 			this.size[0]-5
 		);
 		// draw rectangle around
 		if(this.mode <= 1){
 			this.c.rect(this.offset[0], 
-			this.offset[1] + this.size[1]/2 - fontSize/2-4, 
-			this.size[0], fontSize + 4);
+			this.offset[1] + this.size[1]/2 - settings.fontSize/2-4, 
+			this.size[0], settings.fontSize + 4);
 			this.c.stroke();
 		}
 
@@ -132,40 +132,40 @@ const Speed = class {
 			this.c.textAlign = "left";
 			this.c.fillText("x:", 
 				this.offset[0] + 5, 
-				this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset + (fontSize+fontOffset),
-				fontSize
+				this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset + (settings.fontSize+settings.fontOffset),
+				settings.fontSize
 			);
 			this.c.textAlign = "right";
 			this.c.fillText(stat.xSpeed.toFixed(1), 
 				this.offset[0] + this.size[0]-5, 
-				this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset + (fontSize+fontOffset),
-				this.size[0]-5 - fontSize
+				this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset + (settings.fontSize+settings.fontOffset),
+				this.size[0]-5 - settings.fontSize
 			);
 			// y Speed
 			this.c.textAlign = "left";
 			this.c.fillText("y:", 
 				this.offset[0] + 5, 
-				this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset + 2*(fontSize+fontOffset),
-				fontSize
+				this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset + 2*(settings.fontSize+settings.fontOffset),
+				settings.fontSize
 			);
 			this.c.textAlign = "right";
 			this.c.fillText(stat.ySpeed.toFixed(1), 
 				this.offset[0] + this.size[0]-5, 
-				this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset + 2*(fontSize+fontOffset),
-				this.size[0]-5 - fontSize
+				this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset + 2*(settings.fontSize+settings.fontOffset),
+				this.size[0]-5 - settings.fontSize
 			);
 			// z Speed
 			this.c.textAlign = "left";
 			this.c.fillText("z:", 
 				this.offset[0] + 5, 
-				this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset + 3*(fontSize+fontOffset),
-				fontSize
+				this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset + 3*(settings.fontSize+settings.fontOffset),
+				settings.fontSize
 			);
 			this.c.textAlign = "right";
 			this.c.fillText(stat.zSpeed.toFixed(1), 
 				this.offset[0] + this.size[0]-5, 
-				this.offset[1] + this.size[1]/2 + fontSize/2-fontOffset + 3*(fontSize+fontOffset),
-				this.size[0]-5 - fontSize
+				this.offset[1] + this.size[1]/2 + settings.fontSize/2-settings.fontOffset + 3*(settings.fontSize+settings.fontOffset),
+				this.size[0]-5 - settings.fontSize
 			);
 		}
 	}

@@ -124,27 +124,27 @@ const Compass = class {
 					this.c.fillText(
 						text,
 						this.offset[0] - this.textRad * Math.sin(degToRad(j)), 
-						this.offset[1] - this.textRad * Math.cos(degToRad(j)) + fontSize/2 - fontOffset
+						this.offset[1] - this.textRad * Math.cos(degToRad(j)) + settings.fontSize/2 - settings.fontOffset
 					);
 				}
 			}
 
 			// heading text ########################################################
 			// clear under text
-			this.c.clearRect(this.offset[0] - 1*fontSize, 
-				this.offset[1] - fontSize/2 - fontOffset+3,
-				fontSize*2, fontSize + 3);
+			this.c.clearRect(this.offset[0] - 1*settings.fontSize, 
+				this.offset[1] - settings.fontSize/2 - settings.fontOffset+3,
+				settings.fontSize*2, settings.fontSize + 3);
 			// draw text
 			this.c.textAlign = "center";
 			this.c.fillText(stat.heading.toFixed(0).padStart(3, '0'), 
 				this.offset[0], 
-				this.offset[1] + fontSize/2-fontOffset,
-				fontSize * 2);
+				this.offset[1] + settings.fontSize/2-settings.fontOffset,
+				settings.fontSize * 2);
 			// draw rectangle around
 			if(this.mode < 3){
-				this.c.rect(this.offset[0] - 1*fontSize, 
-					this.offset[1] - fontSize/2-fontOffset+3,
-					fontSize*2, fontSize + 3);
+				this.c.rect(this.offset[0] - 1*settings.fontSize, 
+					this.offset[1] - settings.fontSize/2-settings.fontOffset+3,
+					settings.fontSize*2, settings.fontSize + 3);
 				this.c.stroke();
 			}
 
@@ -160,7 +160,7 @@ const Compass = class {
 			this.c.textAlign = "center";
 			this.c.fillText(stat.heading.toFixed(0).padStart(3, '0'), 
 				this.offset[0], 
-				this.offset[1] + fontSize/2-fontOffset);
+				this.offset[1] + settings.fontSize/2-settings.fontOffset);
 		}
 	}
 }
