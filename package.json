@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "http": "node httpServer.js",
+    "start": "node server/index.js",
+    "http": "node server/httpServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Leon Oleschko",
